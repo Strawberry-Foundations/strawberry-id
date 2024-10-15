@@ -21,22 +21,22 @@
       <a class="box-default b1">
         <h3 id="tunneled" class="white"><b>{{ strings.works_everywhere_title }}</b></h3>
         <hr>
-        <h4 class="rubik-font--default">{{ strings.works_everywhere_description }}</h4>
+        <h4 class="font-family--rubik">{{ strings.works_everywhere_description }}</h4>
       </a>
     
       <a class="box-default b2">
         <h3 id="tunneled" class="white"><b>{{ strings.simple_use_title }}</b></h3>
         <hr>
-        <h4 class="rubik-font--default">{{ strings.simple_use_description }}</h4>
+        <h4 class="font-family--rubik">{{ strings.simple_use_description }}</h4>
       </a>
 
       <a class="box-default b3">
         <h3 id="tunneled" class="white"><b>{{ strings.scaling_title }}</b></h3>
         <hr>
-        <h4 class="rubik-font--default">{{ strings.scaling_description }}</h4>
+        <h4 class="font-family--rubik">{{ strings.scaling_description }}</h4>
       </a>
 
-      <h3 class="rubik-font--default" style="margin-top: 500px">{{ strings.convinced }}</h3>
+      <h3 class="font-family--rubik" style="margin-top: 500px">{{ strings.convinced }}</h3>
       <a class="button-blue" href="/v2/{{ lang }}/register">{{ strings.register }}</a>
     </div>
   </div>
