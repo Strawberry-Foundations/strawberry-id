@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+* {
+    font-family: Rubik;
+}
+
+.button-strawberry {
+    background-color: #ed1c28;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+  
+.button-strawberry:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button-nocolor {
+    background-color: transparent !important;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+  
+.button-nocolor:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button-nocolor--drawer {
+    background-color: transparent !important;
+    border: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: none; /* Keine abgerundeten Ecken unten */
+    color: white;
+    padding: 15px 32px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+  
+.button-nocolor--drawer:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button-nocolor--noanimation {
+    background-color: transparent !important;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+
+
+
+.slide-in-fast {
+    animation: slide-in-fast 2s;
+}
+
+@keyframes slide-in-fast {
+    from {
+        transform: translateY(-800%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.round {
+    border-radius: 15px;
+}
+
+
+.slide-right {
+    animation: slide-right 1s;
+}
+
+.slide-out-right {
+    animation: slide-out-right 2s;
+}
+
+.slide-left {
+    animation: slide-left 2s;
+}
+
+.slide-out {
+    animation: slide-out 2s;
+}
+
+.slide-in {
+    animation: slide-in 2s;
+}
+
+.slide-in-login {
+    animation: slide-in-login 1s;
+}
+
+.slide-top {
+    animation: slide-top 1s;
+}
+
+.dialog-box {
+    border-radius: 15px;
+    background: #fff;
+    width: 60%;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: slide-in-basic 1s;
+}
+
+@keyframes slide-in-login {
+    from {
+        opacity: 0;
+        transform: translateY(-150%);
+    }
+    to {
+        opacity: 1.0;
+        transform: translateY(0);
+    }
+} 
+
+@keyframes slide-in-basic {
+    from {
+        transform: translateY(-190%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(-500%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-top {
+    from {
+        opacity: 0;
+        transform: translateY(-150%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes slide-out {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-500%);
+    }
+}
+
+@keyframes slide-right {
+    from {
+        opacity: 0;
+        transform: translateX(-400%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slide-out-right {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-400%);
+    }
+}
+
+@keyframes slide-left {
+    from {
+        transform: translateX(400%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
