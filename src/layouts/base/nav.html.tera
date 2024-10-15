@@ -1,0 +1,70 @@
+<header class="mdl-layout__header header" style="background-color: rgba(18,18,18,255);">
+  <div class="mdl-layout__header-row">
+    <span class="mdl-layout-title" style="font-family: Rubik">
+      <a href="/"><img style="margin-top: -5px" src="/static/assets/svg/sid_lowercase.svg" width="46px"></a>
+      <strong>Strawberry ID</strong>
+    </span>
+
+    <div class="spacer"></div>
+
+    <div class="mdl-layout-spacer"></div>
+    <nav class="mdl-navigation mdl-layout--large-screen-only">
+      {% if not is_authenticated %}
+        <a class="mdl-navigation__link" href="/v2/{{ lang }}/login">{{ strings.login }}<i class="material-icons" style="margin-left: 5px;">account_circle</i></a>
+      {% else %}
+        <button id="demo-menu-lower-right" class="mdl-navigation__link button-nocolor" href="">
+          {{ user.full_name }}
+          <img src="{{ user.profile_picture_url }}" class="profile-picture">
+        </button>
+
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right" style="width: 300px;">
+          <li style="color: black; padding-left: 20px">
+              <a href="/"><img src="/static/assets/svg/sf_logo.svg" style="width: 70px;"></a>
+              <div style="float: right; margin-right: 20px; margin-top: 10px">
+                  @{{ user.username }} <img src="{{ user.profile_picture_url }}" class="profile-picture">
+              </div>
+          </li>
+
+          {% if user.cloud_engine_enabled == "true" %}
+            <li class="mdl-menu__item round">
+              <a style="text-decoration: none; color: #1f1f1f" href="/v2/{{ lang }}/account">
+                <span class="material-symbols-outlined material-symbols-outlined--ul">dns</span>
+                <div style="margin-left: 33px">Cloud Engine</div>
+              </a>
+            </li>
+          {% else %}
+            <li id="ce" disabled class="mdl-menu__item round">
+              <span class="material-symbols-outlined material-symbols-outlined--ul">dns</span>
+              <div style="margin-left: 33px">{{ strings.cloud_engine }}</div>
+            </li>
+            <div class="mdl-tooltip" data-mdl-for="ce">
+              Cloud Engine has been disabled because you broke the Terms of service.
+            </div>
+          {% endif %}
+            
+          <li class="mdl-menu__item round">
+            <a style="text-decoration: none; color: #1f1f1f" href="/v2/{{ lang }}/account">
+              <span class="material-symbols-outlined material-symbols-outlined--ul">shopping_cart</span>
+              <div style="margin-left: 33px">{{ strings.my_products }}</div>
+            </a>
+          </li>
+
+          <hr>
+          <li class="mdl-menu__item round">
+            <a style="text-decoration: none; color: #1f1f1f" href="/v2/{{ lang }}/account">
+              <span class="material-symbols-outlined material-symbols-outlined--ul">settings</span>
+              <div style="margin-left: 33px">{{ strings.settings }}</div>
+            </a>
+          </li>
+
+          <li class="mdl-menu__item round">
+            <a style="text-decoration: none; color: #1f1f1f" href="/logout?hl={{ lang }}">
+              <span class="material-symbols-outlined material-symbols-outlined--ul">logout</span>
+              <div style="margin-left: 33px">{{ strings.logout }}</div>
+            </a>
+          </li>
+        </ul>
+      {% endif %}
+    </nav>
+  </div>
+</header>
