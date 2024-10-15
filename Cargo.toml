@@ -1,0 +1,29 @@
+[package]
+name = "strawberry-id"
+version = "2.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = { version = "0.5.1", features = ["json", "secrets"] }
+rocket_dyn_templates = { version = "0.2.0", features = ["tera"] }
+tokio = "1.40.0"
+
+sqlx = { version = "0.8.2", features = ["sqlite", "runtime-tokio-native-tls"] }
+argon2 = "0.6.0-pre.1"
+sha2 = "0.11.0-pre.4"
+hex = "0.4.3"
+
+serde = "1.0.210"
+serde_json = "1.0.128"
+serde_yaml = "0.9.34"
+
+lazy_static = "1.5.0"
+rand = "0.9.0-alpha.2"
+futures = "0.3.30"
+
+[profile.release]
+opt-level = 'z'
+strip = true
+lto = true
