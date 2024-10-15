@@ -4,12 +4,12 @@ use rocket::response::Redirect;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 
-use crate::global::{CONFIG, CORE, DATABASE};
 use crate::core::locale::{Language, LANGUAGES};
 use crate::core::object::{OAuthForm, OAuthMeta};
 use crate::core::state::AppState;
 use crate::core::system_core::AnyResponder;
 use crate::utilities::name_parser;
+use crate::global::{CONFIG, CORE, DATABASE};
 
 #[get("/login/oauth")]
 pub async fn login_oauth_no_lang(lang: Option<Language>) -> Redirect {

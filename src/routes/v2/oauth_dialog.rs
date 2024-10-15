@@ -3,13 +3,13 @@ use rocket::response::Redirect;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 
-use crate::global::{CONFIG, CORE, DATABASE};
 use crate::core::locale::LANGUAGES;
 use crate::core::object::OAuthMeta;
 use crate::core::params::ApiParams;
 use crate::core::state::AppState;
 use crate::core::system_core::AnyResponder;
 use crate::utilities::name_parser;
+use crate::global::{CONFIG, CORE, DATABASE};
 
 #[get("/<lang>/login/oauth_dialog/<service>?<params..>")]
 pub async fn oauth_permit_dialog(lang: &str, service: &str, params: ApiParams, state: &State<AppState>, jar: &CookieJar<'_>) -> AnyResponder {

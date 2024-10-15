@@ -5,7 +5,6 @@ use rocket::response::Redirect;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 
-use crate::global::{ACCOUNTS, CONFIG, CORE, DATABASE};
 use crate::core::locale::{Language, LANGUAGES, Messages};
 use crate::core::object::{CodeType, LoginForm, LoginMeta};
 use crate::core::params::{LoginParams, PostLoginParams};
@@ -13,6 +12,7 @@ use crate::core::state::AppState;
 use crate::core::system_core::{Account, AnyResponder, verify_password};
 use crate::core::uuid::generate_random_uuid;
 use crate::utilities::name_parser;
+use crate::global::{ACCOUNTS, CONFIG, CORE, DATABASE};
 
 
 pub async fn template_responder(
