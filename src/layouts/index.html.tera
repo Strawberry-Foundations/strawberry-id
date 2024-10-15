@@ -1,0 +1,45 @@
+{% extends "base/base" %}
+
+{% block content %}
+<center>
+  <div class="main-content">
+    <div class="main-header">
+      <img src="/static/assets/svg/sf_logo_small.svg">
+      <h2>{{ strings.strawberry_id_title }}</h2>
+      <h4>{{ strings.strawberry_id_subtitle }}<br>{{ strings.strawberry_id_subtitle_2 }}</h4>
+    </div>
+
+    <div class="main-header-subcontent">
+      <h4>{{ strings.already_have_id }}</h4>
+      <a class="button-blue" href="/v2/{{ lang }}/login">{{ strings.login }}</a>
+    </div>
+    <hr>
+
+    <div class="main-subcontent">
+      <h2>{{ strings.benefits_id }}</h2>
+
+      <a class="box-default b1">
+        <h3 id="tunneled" class="white"><b>{{ strings.works_everywhere_title }}</b></h3>
+        <hr>
+        <h4 class="rubik-font--default">{{ strings.works_everywhere_description }}</h4>
+      </a>
+    
+      <a class="box-default b2">
+        <h3 id="tunneled" class="white"><b>{{ strings.simple_use_title }}</b></h3>
+        <hr>
+        <h4 class="rubik-font--default">{{ strings.simple_use_description }}</h4>
+      </a>
+
+      <a class="box-default b3">
+        <h3 id="tunneled" class="white"><b>{{ strings.scaling_title }}</b></h3>
+        <hr>
+        <h4 class="rubik-font--default">{{ strings.scaling_description }}</h4>
+      </a>
+
+      <h3 class="rubik-font--default" style="margin-top: 500px">{{ strings.convinced }}</h3>
+      <a class="button-blue" href="/v2/{{ lang }}/register">{{ strings.register }}</a>
+    </div>
+  </div>
+</center>
+
+{% endblock content %}

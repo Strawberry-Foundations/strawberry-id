@@ -1,0 +1,126 @@
+{% extends "base/base_login" %}
+
+{% block content %}
+<center>
+  {% if params.debug %}
+    <h1>Params</h1>
+    <p>Redirect: {{ params.redirect }}</p>
+    <p>Redirect Language: {{ params.hl }}</p>
+    <p>Service: {{ params.service }}</p>
+    <p>OAuth: {{ params.oauth }}</p>
+
+    <h1>Meta</h1>
+    <p>Error: {{ meta.error }}</p>
+    <p>Redirect after Login: {{ meta.redirect_after_login }}</p> 
+    <p>Service Login: {{ meta.service_login }}</p>
+    <p>Info Message: {{ meta.info_message }}</p>
+    <p>Service Name: {{ meta.service_name }}</p>
+    <p>Trusted Web: {{ meta.trusted_web }}</p>
+    <p>Trusted Service: {{ meta.trusted_service }}</p>
+  {% endif %}
+
+  <div class="login-area">
+    <div class="login-area--top">
+      <img src="/static/assets/svg/sf_logo.svg">
+      <h3>{{ strings.login_to_sid }}</h3>
+      <h4>{{ strings.login_to_sid_subtitle }}</h4>
+    </div>
+    
+    <div class="login-area--security">
+      <div class="trusted-badge">
+        {% if meta.redirect_after_login %}
+          {% if meta.trusted_web %}
+            <span id="verified_icon" class="material-symbols-outlined" style="color: #34A843">verified</span>
+            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_domain }}</div>
+            <p style="color: #34A843"><b>{{ redirect_after_login }}</b></p>
+          {% else %}
+            <span id="verified_icon" class="material-symbols-outlined" style="color: red">priority_high</span>
+            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.not_trusted_domain }}</div>
+            <p style="color: red"><b>{{ redirect_after_login }}</b></p>
+          {% endif %}
+        {% elif meta.service_login or params.oauth %}
+          {% if meta.trusted_service %}
+            <span id="verified_icon" class="material-symbols-outlined" style="color: #34A843">verified</span>
+            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
+            <p style="color: #34A843"><b>{{ service_after_login }}</b></p>
+          {% else %}
+            <span id="verified_icon" class="material-symbols-outlined" style="color: red">priority_high</span>
+            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.not_trusted_service }}</div>
+            <p style="color: red"><b>{{ service_after_login }}</b></p>
+          {% endif %}
+        {% else %}
+          <span id="verified_icon" class="material-symbols-outlined" style="color: #34A843">verified</span>
+          <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
+          <p style="color: #34A843"><b>{{ strings.account_settings_after_login }}</b></p>
+        {% endif %}
+      </div>  
+    </div>
+
+    <div class="login-area--main">
+
+      <form action="/v2/login?uuid={{ uuid }}" method="post">
+        
+        <label class="input-hint--small">{{ strings.email_username }}</label>
+        <div class="input-container input-container--username">
+          <input type="text" id="username" name="username" class="input-field" onblur="unfocus('username')" required>
+          <label for="username" class="input-hint">{{ strings.email_username }}</label>
+        </div>
+
+        <label class="input-hint--small">{{ strings.password }}</label>
+        <div class="input-container input-container--password">
+          <input type="password" id="password" name="password" class="input-field" onblur="unfocus('password')" required>
+          <label for="password" class="input-hint">{{ strings.password }}</label>
+        </div>
+
+        <input onclick="redirect('/v2/{{ lang }}/register')" id="register" class="button-register" type="button" value="{{ strings.new_account }}">
+        <input id="login_submit" class="button-login" type="submit" value="{{ strings.login }}">
+      </form>
+
+      {% if meta.error %}
+      <dialog id="error-dialog" class="login-area dialog-box-login">
+        <h4 class="mdl-dialog__title rubik" style="color: red"><b>{{ strings.login_error }}</b></h4>
+        <div class="mdl-dialog__content rubik">
+            <p style="color: black;">{{ meta.info_message }}</p>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" onclick="closeModal()" class="mdl-button mdl-js-button mdl-button--raised close rubik" style="border-radius: 10px; background-color: #e0e0e0">
+              {{ strings.close }}
+            </button>
+        </div>
+      </dialog>
+
+      <script>
+        var modal = document.getElementById("error-dialog");
+
+        var span = document.getElementsByClassName("close")[0];
+
+        window.onload = function() {
+            modal.style.display = "block";
+        };
+
+        var encodedString = '{{ external_params }}';
+
+        var decodedString = decodeURIComponent(encodedString.replace(/&amp;/g, '&'));
+
+        function closeModal() {
+            modal.style.display = "none";
+            window.location.href = "/v2/{{ lang }}/login" + decodedString;
+        }
+
+      </script>
+    {% endif %}
+    </div>
+  </div>
+  
+  <div class="footer--login">
+    <a style="color: #4F93ED" href="/{{ lang }}/policies/privacy">{{ strings.privacy_policy }}</a>
+    <a style="color: #4F93ED; margin-left: 10px" href="/{{ lang }}/policies/terms">{{ strings.terms_of_service }}</a>
+
+    {% if lang == "de" %}
+      <label style="margin-left: 30px" class="rubik">Deutschland ({{ lang }})</label>
+    {% else %}
+      <label style="margin-left: 30px" class="rubik">United States ({{ lang }})</label>
+    {% endif %}
+  </div>
+</center>
+{% endblock content %}

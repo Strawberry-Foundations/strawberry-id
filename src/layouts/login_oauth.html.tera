@@ -1,0 +1,59 @@
+{% extends "base/base_login" %}
+
+{% block content %}
+<center>
+  <div class="login-area">
+    <div class="login-area--top">
+      <img src="/static/assets/svg/sf_logo.svg">
+      <h3><b>{{ strings.login }}</b></h3>
+      <h4 style="font-size: 20px"><b>{{ meta.service_name }}</b></h4>
+      <p>{{ strings.continue_code_input }}</p>
+    </div>
+    
+    <div class="login-area--security">
+      <div class="trusted-badge">
+        {% if meta.trusted %}
+            <span id="verified_icon" class="material-symbols-outlined" style="color: #34A843">verified</span>
+            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
+            <p style="color: #34A843"><b>{{ service_after_login }}</b></p>
+        {% else %}
+            <span id="verified_icon" class="material-symbols-outlined" style="color: red">priority_high</span>
+            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.not_trusted_service }}</div>
+            <p style="color: red"><b>{{ service_after_login }}</b></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="login-area--main">
+      <form action="/v2/{{ lang }}/login/oauth/{{ meta.service }}" method="post">
+
+        <label class="input-hint--small">{{ strings.code }}</label>
+        <div class="input-container input-container--username" style="margin-top: 110px;">
+          <input type="text" id="code" name="code" class="input-field" onblur="unfocus('code')" pattern="-?[0-9]*(\.[0-9]+)?" required>
+          <label for="code" class="input-hint">{{ strings.code }}</label>
+          <span class="mdl-textfield__error">{{ strings.error_invalid_code }}</span>
+        </div>
+
+        {% if meta.error %}
+          <p style="color: red; position: absolute; left: 50px; right: 50px; margin-top: -90px"><strong>{{ meta.info_message }}</strong></p>
+        {% else %}
+          <p style="color: #34A843; position: absolute; left: 50px; right: 50px; margin-top: -90px"><strong>{{ meta.info_message }}</strong></p>
+        {% endif %} 
+
+        <input id="login_submit" class="button-login" type="submit" value="{{ strings.str_continue }}" style="margin-top: 30px;">
+      </form>
+    </div>
+  </div>
+  
+  <div class="footer--login">
+    <a style="color: #4F93ED" href="/{{ lang }}/policies/privacy">{{ strings.privacy_policy }}</a>
+    <a style="color: #4F93ED; margin-left: 10px" href="/{{ lang }}/policies/terms">{{ strings.terms_of_service }}</a>
+
+    {% if lang == "de" %}
+      <label style="margin-left: 30px" class="rubik">Deutschland ({{ lang }})</label>
+    {% else %}
+      <label style="margin-left: 30px" class="rubik">United States ({{ lang }})</label>
+    {% endif %}
+  </div>
+</center>
+{% endblock content %}
