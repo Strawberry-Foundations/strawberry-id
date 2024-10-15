@@ -1,0 +1,11 @@
+host:
+  address: 0.0.0.0
+  port: 8080
+
+vars:
+  static_url_path: /static
+  static_folder: static
+  template_folder: layouts
+  trusted_sites: ["example.com", "some.example.com",]
+  trusted_services: ["example", "yourservice"]
+  secret_key: some_secret_key
