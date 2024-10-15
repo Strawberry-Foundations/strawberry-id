@@ -8,3 +8,4 @@
 - Configurable services
 - More customization
 - Change database backend to MySQL (configurable?)
+- Native dark mode
