@@ -1,0 +1,23 @@
+<footer>
+  <center>
+    <div class="footer">
+      <hr>
+      <h4 class="footer--organization-name"><b>© Strawberry Foundations 2021 - 2024</b></h4>
+
+      {% if lang == "de" %}
+        <h4 class="footer-region">Deutschland ({{ lang }})</h4>
+      {% else %}
+        <h4 class="footer-region">United States ({{ lang }})</h4>
+      {% endif %}
+
+      <p class="footer--privacy-notice">{{ strings.privacy_notice }}</p>
+
+      <div class="footer-links">
+        <a class="footer--link" href="https://strawberryfoundations.xyz/{{ lang }}/policies/privacy">{{ strings.privacy_policy }}</a>
+        <a class="footer--link" href="https://strawberryfoundations.xyz/{{ lang }}/policies/terms">{{ strings.terms_of_service }}</a>
+      </div>
+
+      <img class="footer-logo" src="/static/assets/svg/sf_logo_small.svg" width="50px">
+    </div>
+  </center>
+</footer>
