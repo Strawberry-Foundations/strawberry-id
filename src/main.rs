@@ -83,6 +83,9 @@ async fn main() {
             static_files,
             logout,
         ])
+        .register("/", catchers![
+            routes::status_code::not_found
+        ])
         .configure(figment)
         .attach(Template::fairing())
         .launch()
