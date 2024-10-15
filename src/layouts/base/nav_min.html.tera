@@ -4,9 +4,5 @@
       <a href="/"><img style="margin-top: -5px" src="/static/assets/svg/sf_logo_small.svg" width="46px"></a>
       <strong>Strawberry ID</strong>
     </span>
-
-    <div class="spacer"></div>
-
-    <div class="mdl-layout-spacer"></div>
   </div>
 </header>
