@@ -1,0 +1,96 @@
+# Basic
+login: Login
+login_to_sid: Log in to Strawberry ID
+login_to_sid_subtitle: Use your Strawberry ID to log in.
+login_to: Login to
+register: Register
+new_account: Create new account
+logout: Logout
+close: Close
+password: Password
+email_username: E-Mail or Username
+username: Username
+email: E-Mail
+email_optional: E-Mail (Optional)
+name_optional: Name (First and last name) (Optional)
+code: Code
+str_continue: Continue
+back: Back
+allow: Allow
+goto_root: To the homepage
+
+# Content Strings
+strawberry_id_title: One account - for all Strawberry Foundations products
+strawberry_id_subtitle: Whether Strawberry Tunneled, Cloud or Chat,
+strawberry_id_subtitle_2: you can use your Strawberry ID for all our products.
+already_have_id: Do you already have a Strawberry ID? Log in to manage your account.
+
+# Benefits 
+benefits_id: Advantages of Strawberry ID
+works_everywhere_title: Works everywhere
+works_everywhere_description: Strawberry ID works everywhere - no matter where, on which device or in which location.
+simple_use_title: Easy to use
+simple_use_description: Using Strawberry ID is super easy - website login, or service login. Sign up and one click, or code entry!
+scaling_title: Scaling
+scaling_description: The Strawberry ID concept is open source - so anyone can integrate Strawberry ID into their own website!
+convinced: Convinced? Create your own Strawberry ID!
+
+# Footer
+privacy_notice: We at Strawberry Foundations attach great importance to your personal data. Therefore, we do not collect any data from you that you have not provided.
+privacy_policy: Privacy policy
+terms_of_service: Terms of service
+
+# Account Dropdown Strings
+settings: Settings
+my_products: My products
+cloud_engine: Cloud Engine
+
+# Login Strings
+create_account: Don't have a Strawberry ID yet?
+create_account_2: Create one!
+
+# Register Strings
+have_account: Don't have a Strawberry ID yet?
+have_account_2: Create one!
+
+# Login messages
+login_error: Login error
+login_success: Login success
+wrong_username_or_password: Your username or password is incorrect correct. Please check your input!
+wrong_username: This Strawberry ID does not exist! Check your input!
+wrong_password: Your password is incorrect. Check your input again!
+account_disabled: Your account has been banned. Contact support if you think your account has been wrongly banned.
+
+redirect_after_login: After logging in you will be automatically redirected to %s
+trusted_domain: This domain has been verified by us and is safe.
+not_trusted_domain: This domain has not been verified and could be harmful.
+
+service_after_login: After logging in, you will be logged in to %s
+trusted_service: This service has been verified by us and is safe.
+not_trusted_service: This service has not been verified and could be harmful.
+
+account_settings_after_login: After logging in, you will be redirected to your account page
+
+continue_service_login: You must enter the following code to continue registering for this service
+show_code: Click to display code
+login_code: Login code
+warning_code_show: Copy the code and do not show it to anyone else.
+
+# Account settings
+account_settings: Account settings
+
+# General Error Messages
+cloud_engine_deactivated: This feature has been disabled for you by an administrator.
+
+# OAuth Strings
+continue_code_input: Please enter the code displayed in your app to continue the login process
+error_no_code: A code is required to continue the login process
+error_invalid_code: Invalid code
+code_valid: Login via code successful. You can close this page now
+
+# OAuth Dialog (Strawberry ID Fast Login) Strings
+service_wants_to_login: "%1 wants to log in with code %2"
+only_permit_you_know: Check whether this request really comes from the app and only allow access if you trust this app.
+login_not_possible: Login not possible
+login_not_possible_invalid_code: The given code is either incorrect or does not exist.
+login_success_subtitle: You have been logged in to %s. You can now close this page

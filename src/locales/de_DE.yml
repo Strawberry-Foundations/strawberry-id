@@ -1,0 +1,96 @@
+# Basic strings
+login: Anmelden
+login_to_sid: Bei Strawberry ID anmelden
+login_to_sid_subtitle: Verwende deine Strawberry ID um dich anzumelden.
+login_to: Anmelden bei
+register: Registrieren
+new_account: Neues Konto erstellen
+logout: Abmelden
+close: Schließen
+password: Passwort
+email_username: E-Mail oder Nutzername
+username: Nutzername
+email: E-Mail
+email_optional: E-Mail (Optional)
+name_optional: Name (Vor- und Nachname) (Optional)
+code: Code
+str_continue: Weiter
+back: Zurück
+allow: Erlauben
+goto_root: Zur Startseite
+
+# Content Strings
+strawberry_id_title: Ein Account - für alle Produkte von Strawberry Foundations
+strawberry_id_subtitle: Egal ob Strawberry Tunneled, Cloud oder Chat,
+strawberry_id_subtitle_2: deine Strawberry ID kannst du für alle unsere Produkte verwenden.
+already_have_id: Hast du schon eine Strawberry ID? Melde dich an um deinen Account zu verwalten.
+
+# Benefits 
+benefits_id: Vorteile einer Strawberry ID
+works_everywhere_title: Funktioniert überall
+works_everywhere_description: Strawberry ID funktioniert überall - Egal an welchen Ort, an welchen Gerät oder an welcher Stelle. 
+simple_use_title: Einfache Nutzung
+simple_use_description: Die Verwendung von Strawberry ID ist super einfach - Website-Login, oder Service Login. Anmelden und ein Klick, oder Codeeingabe!
+scaling_title: Skalierung
+scaling_description: Das Konzept von Strawberry ID ist Open Source - Und so kann jeder selber eine Strawberry ID Integration auf seiner Website einbauen!
+convinced: Überzeugt? Erstelle deine eigene Strawberry ID!
+
+# Footer
+privacy_notice: Wir bei Strawberry Foundations legen besonders viel Wert auf ihre personenbezogenen Daten. Daher sammeln wir keine Daten von Ihnen, die Sie nicht angegeben haben.
+privacy_policy: Datenschutz
+terms_of_service: Nutzungsbedingungen
+
+# Account Dropdown Strings
+settings: Einstellungen
+my_products: Meine Produkte
+cloud_engine: Cloud Engine
+
+# Login Strings
+create_account: Du hast noch keine Strawberry ID? 
+create_account_2: Erstelle eine!
+
+# Register Strings
+have_account: Du hast bereits eine Strawberry ID?
+have_account_2: Melde dich an!
+
+# Login messages
+login_error: Anmeldefehler
+login_success: Anmeldung erfolgreich
+wrong_username_or_password: Dein Nutzername oder dein Passwort ist nicht richtig. Überprüfe nochmals deine Eingaben!
+wrong_username: Diese Strawberry ID existiert nicht! Überprüfe deine Eingabe!
+wrong_password: Dein Passwort ist inkorrekt. Überprüfe nochmals deine Eingabe!
+account_disabled: Dein Account wurde gesperrt. Kontaktiere den Support, falls du denkst, das dein Account zu unrecht gesperrt wurde.
+
+redirect_after_login: Nach dem Anmelden wirst du automatisch nach %s weitergeleitet
+trusted_domain: Diese Domain wurde von uns verifiziert und ist sicher.
+not_trusted_domain: Diese Domain wurde nicht verifiziert und könnte schädlich sein.
+
+service_after_login: Nach dem Anmelden wirst du bei %s angemeldet
+trusted_service: Dieser Service wurde von uns verifiziert und ist sicher.
+not_trusted_service: Dieser Service wurde nicht verifiziert und könnte schädlich sein.
+
+account_settings_after_login: Nach dem Anmelden wirst du zu deiner Accountseite weitergeleitet
+
+continue_service_login: Für die weitere Anmeldung bei diesem Service musst du folgenden Code eingeben
+show_code: Klicke, um Code anzeigen zu lassen
+login_code: Anmeldecode
+warning_code_show: Kopiere dir den Code und zeige diesen Code niemanden anderes.
+
+# Account settings
+account_settings: Accounteinstellungen
+
+# General Error Messages
+cloud_engine_deactivated: Dieses Feature wurde von einem Administratoren für Sie deaktiviert.
+
+# OAuth Strings
+continue_code_input: Bitte gebe den in deiner App angezeigten Code ein, um die Anmeldung fortzufahren
+error_no_code: Ein Code ist erforderlich, um die Anmeldung fortzufahren
+error_invalid_code: Ungültiger Code
+code_valid: Login über Code erfolgreich. Du kannst diese Seite nun schließen
+
+# OAuth Dialog (Strawberry ID Fast Login) Strings
+service_wants_to_login: "%1 möchte sich mit Code %2 anmelden"
+only_permit_you_know: Überprüfe, ob diese Anfrage wirklich von der App stammt und erlaube den Zugriff nur, wenn du dieser App vertraust.
+login_not_possible: Anmeldung nicht möglich
+login_not_possible_invalid_code: Der angegebene Code ist entweder falsch oder existiert nicht.
+login_success_subtitle: Du wurdest bei %s angemeldet. Du kannst diese Seite nun schließen
