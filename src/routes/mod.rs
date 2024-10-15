@@ -1,5 +1,6 @@
 pub mod root;
 pub mod web_static;
+pub mod status_code;
 
 pub mod v2 {
     pub mod index;
