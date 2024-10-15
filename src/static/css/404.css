@@ -1,0 +1,44 @@
+.box-404 {
+    margin-top: 30px;
+}
+
+h1 {
+    font-size: 55px;
+}
+
+.box-left {
+   display: flex;
+   float: left;
+   margin-left: 200px;
+}
+
+.box-left--image {
+    width: 200px;
+}
+
+.box-right {
+    float: right;
+    margin-right: 300px;   
+}
+
+@media only screen and (max-width: 1570px) {
+    .box-left--image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 150px;
+    }
+    
+    .box-404,
+    h1,
+    .box-left,
+    .box-right {
+        margin: 0;
+        float: none;
+        width: auto;
+    }
+
+    .box-left {
+        order: -1;
+    }
+}
