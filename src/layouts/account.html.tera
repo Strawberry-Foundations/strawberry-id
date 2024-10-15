@@ -1,0 +1,11 @@
+{% extends "base/base" %}
+
+{% block content %}
+<center>
+  <div class="main-content">
+    <h1><b>{{ strings.account_settings }}</b></h1>
+    <h4>@{{ user.username }}</h4>
+  </div>
+</center>
+
+{% endblock content %}
