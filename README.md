@@ -7,3 +7,4 @@
 - Configurable logo in config.yml
 - Configurable services
 - More customization
+- Change database backend to MySQL (configurable?)
