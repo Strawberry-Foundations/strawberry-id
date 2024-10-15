@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::path::Path;
 use serde::de::Error;
 
-use crate::core::locale::Messages;
+use crate::core::locale::{Messages, LANGUAGES};
 
 pub struct AppState {
     pub messages: HashMap<String, Messages>,
@@ -23,8 +23,8 @@ impl AppState {
     pub fn get_messages() -> Result<HashMap<String, Messages>, serde_yaml::Error> {
         let mut messages_map = HashMap::new();
 
-        for lang in &["en", "de"] {
-            let lang_path_string = match *lang {
+        for lang in LANGUAGES {
+            let lang_path_string = match lang {
                 "de" => "de_DE",
                 "en" => "en_US",
                 _ => ""
