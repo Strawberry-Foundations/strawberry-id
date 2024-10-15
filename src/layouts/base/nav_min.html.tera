@@ -1,7 +1,7 @@
 <header class="mdl-layout__header header" style="background-color: rgba(18,18,18,255);">
   <div class="mdl-layout__header-row">
     <span class="mdl-layout-title" style="font-family: Rubik; font-size: 25px">
-      <a href="/"><img style="margin-top: -5px" src="/static/assets/svg/sf_logo_small.svg" width="46px"></a>
+      <a href="/"><img style="margin-top: -5px" src="/static/assets/svg/sid_lowercase.svg" width="46px"></a>
       <strong>Strawberry ID</strong>
     </span>
   </div>
