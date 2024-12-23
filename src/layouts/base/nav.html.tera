@@ -26,7 +26,7 @@
 
                 <div class="smd-component_dropdown-content">
                     <div class="smd-component_dropdown-header">
-                        <a href="/v2/{{ lang }}"><img src="/static/assets/svg/sf_logo.svg" class="smd-component_dropdown-logo"></a>
+                        <a href="/v2/{{ lang }}"><img src="/static/assets/svg/sf_logo.svg" class="smd-component_dropdown-logo" alt="Logo"></a>
 
                         <div class="smd-component_dropdown-profile">
                             <div class="smd-component_dropdown-profile-name">@{{ user.username }}</div>
