@@ -40,7 +40,7 @@ pub async fn index(lang: &str, state: &State<AppState>, jar: &CookieJar<'_>) -> 
     };
 
     Template::render("index", context! {
-        title: &".notitle",
+        title: &"!!empty",
         strings: &strings,
         lang: &lang,
         is_authenticated: is_authenticated,
