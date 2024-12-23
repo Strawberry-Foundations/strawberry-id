@@ -64,7 +64,7 @@ impl Core {
     }
 
     pub fn generate_code(&mut self, user: UserData, code_type: CodeType) -> u64 {
-        let mut code = rand::thread_rng().gen_range(1111111111..=9999999999);
+        let mut code = rand::rng().random_range(1111111111..=9999999999);
 
         while self.codes.contains_key(&code) {
             code = self.generate_code(user.clone(), code_type)
@@ -91,7 +91,7 @@ impl Core {
     }
 
     pub fn generate_code_ext(&mut self, code_type: CodeType) -> u64 {
-        let mut code = rand::thread_rng().gen_range(1111111111..=9999999999);
+        let mut code = rand::rng().random_range(1111111111..=9999999999);
 
         let user = UserData::default();
 
