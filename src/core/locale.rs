@@ -26,6 +26,7 @@ pub struct Messages {
     pub allow: String,
     pub goto_root: String,
     pub create_account_short: String,
+    pub developer_documentation: String,
 
     /// Content Strings
     pub strawberry_id_title: String,

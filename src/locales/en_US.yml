@@ -19,6 +19,7 @@ back: Back
 allow: Allow
 goto_root: To the homepage
 create_account_short: Create an account
+developer_documentation: Developer documentation
 
 # Content Strings
 strawberry_id_title: One account - for all Strawberry Foundations products
