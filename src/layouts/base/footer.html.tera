@@ -16,15 +16,16 @@
         <br>
 
         <div style="display: flex; align-items: center; justify-content: center;">
-            <img src="/static/assets/svg/sf_logo_small.svg" width="50px">
+            <a href="https://strawberryfoundations.org/{{ lang }}">
+                <img src="/static/assets/svg/sf_logo_small.svg" width="50px">
+            </a>
             <div style="margin-left: 16px;">
                 {% if lang == "de" %}
-                <h4>Deutschland ({{ lang }})</h4>
+                <h4>Deutschland ({{ lang | upper }})</h4>
                 {% else %}
-                <h4>United States ({{ lang }})</h4>
+                <h4>United States ({{ lang | upper }})</h4>
                 {% endif %}
             </div>
-
         </div>
     </center>
 </footer>

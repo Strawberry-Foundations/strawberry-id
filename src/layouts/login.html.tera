@@ -3,6 +3,7 @@
 {% block stylesheet %}
 <link rel="stylesheet" href="/static/stylesheet/login.css">
 <link rel="stylesheet" href="/static/stylesheet/base.css">
+<link rel="stylesheet" href="/static/stylesheet/footer.css">
 {% endblock stylesheet %}
 
 {% block content %}
@@ -82,6 +83,7 @@
                         window.onload = function () {
                             modal.style.display = "block";
                             document.getElementById('background').classList.add('sid-layout_main-blur');
+                            document.getElementById('footer').classList.add('sid-layout_main-blur');
                         };
 
                         var encodedString = '{{ external_params }}';
@@ -92,6 +94,7 @@
                             modal.style.display = "none";
                             window.location.href = "/v2/{{ lang }}/login" + decodedString;
                             document.getElementById('background').classList.remove('sid-layout_main-blur');
+                            document.getElementById('footer').classList.remove('sid-layout_main-blur');
                         }
                     </script>
                 {% endif %}
@@ -101,3 +104,23 @@
 </center>
 {% endblock content %}
 
+
+{% block footer %}
+<footer class="sid-layout_footer" id="footer">
+    <center>
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <a href="https://strawberryfoundations.org/{{ lang }}">
+                <img src="/static/assets/svg/sf_logo_small.svg" width="50px">
+            </a>
+            <div style="margin-left: 16px;">
+                {% if lang == "de" %}
+                <h4>Deutschland ({{ lang | upper }})</h4>
+                {% else %}
+                <h4>United States ({{ lang | upper }})</h4>
+                {% endif %}
+            </div>
+
+        </div>
+    </center>
+</footer>
+{% endblock footer %}
