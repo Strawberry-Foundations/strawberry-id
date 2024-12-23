@@ -15,7 +15,7 @@
     <div id="error-dialog" class="smd-component_card sid-layout_login-dialog">
         <h2>{{ strings.login_error }}</h2>
         <p>{{ meta.info_message }}</p>
-        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue" style="border-radius: 10px; background-color: #e0e0e0">
+        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue">
             {{ strings.close }}
         </button>
     </div>

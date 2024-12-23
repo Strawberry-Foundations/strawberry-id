@@ -1,0 +1,57 @@
+.sid-layout_oauth-info {
+    width: 600px;
+    margin-top: 32px;
+}
+
+.sid-layout_oauth-login input, button {
+    font-family: "Poppins", serif !important;
+}
+
+@keyframes slide-right {
+    from {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateX(-400%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slide-out-top {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(-200%);
+    }
+}
+
+@keyframes slide-in-top {
+    from {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(-400%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sid-keyframe_slide-in-top {
+    animation: slide-in-top 1.7s;
+}
+
+.sid-keyframe_slide-out-top {
+    animation: slide-out-top 2s forwards;
+}
+
+.sid-keyframe_slide-right {
+    animation: slide-right 2s;
+}
+

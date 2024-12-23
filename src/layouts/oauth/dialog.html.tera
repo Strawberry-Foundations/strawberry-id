@@ -1,103 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="apple-mobile-web-app-status-bar-style" content="#F44336">
-    <meta name="msapplication-navbutton-color" content="#F44336">
-    <meta name="theme-color" content="#F44336">
-    <meta name="color-theme-override" content="#F44336">
-    
-    <meta name="keywords" content="development">
-    <meta name="og:site_name" content="Strawberry ID">
-    <meta name="og:title" content="Strawberry ID">
-    <meta name="og:description" content="Strawberry ID - One account, for all Strawberry Foundations products">
-    <meta name="description" content="Strawberry ID - One account, for all Strawberry Foundations products">
-    <meta name="author" content="Strawberry Foundations">
+{% extends "base/base" %}
 
-    <meta property="og:image" content="https://strawberryfoundations.org/static/assets/sf_logo.png">
-    <meta property="og:site_name" content="Strawberry ID">
-    <meta property="og:url" content="https://strawberryfoundations.org/">
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/stylesheet/login.css">
+<link rel="stylesheet" href="/static/stylesheet/base.css">
+<link rel="stylesheet" href="/static/stylesheet/oauth.css">
+{% endblock stylesheet %}
 
-    <meta content="Strawberry ID" property="og:title">
-    <meta content="Strawberry ID - One account, for all Strawberry Foundations products" property="og:description">
+{% block content %}
+<center>
+    <div class="smd-layout_main">
+        <div class="smd-component_card sid-layout_login sid-layout_oauth-login smd-component_base-shadow sid-keyframe_slide-right" id="oauth-dialog">
+            {% if meta.error %}
+                <div>
+                    <a href="/"><img class="slide-tpü" src="/static/assets/svg/sf_logo.svg" width="90px" alt="Logo"></a>
+                    <h2>{{ strings.login_not_possible }}</h2>
+                    <h6><b>{{ strings.login_not_possible_invalid_code }}</b></h6>
 
-    {% if title == ".notitle"%}
-      <title>Strawberry ID</title>
-    {% else %}
-      <title>{{ title }} - Strawberry ID</title>
-    {% endif %}
-
-    <link rel="icon" href="/static/assets/svg/sid_lowercase.svg"/>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="/static/css/basic.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/index.css">
-    <link rel="stylesheet" href="/static/css/login.css">
-    <link rel="stylesheet" href="/static/css/dialog_oauth.css">
-    <link rel="stylesheet" href="/static/css/buttons.css">
-    <link rel="stylesheet" href="/static/css/footer.css">
-
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-deep_orange.min.css" /> 
-    
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-</head>
-
-<body style="background-color: #F0F4F9;">
-  {% if meta.error %}
-    <div class="oauth-content">
-      <center>
-        <div class="login-area slide-top" style="height: 300px; width: 700px; margin-top: 56px;">
-          <img class="slide-top" src="/static/assets/svg/sf_logo.svg" width="90px">
-          <h3 ><b>{{ strings.login_not_possible }}</b></h3>
-          <h6 ><b>{{ strings.login_not_possible_invalid_code }}</b></h6>
-
-          <a class="mdl-button mdl-js-button mdl-button--raised rubik"
-             style="border-radius: 10px; background-color: #a0e0e0; width: 150px; margin-top: 20px"
-             href="/">
-                {{ strings.back }}
-          </a>
-        </div>
-      </center>
-    </div>
-  {% else %}
-    <div class="oauth-content">
-      <center>
-        <div class="login-area slide-right" style="height: 440px; min-height: 440px; max-height: 540px; width: 800px;">
-          <a href="/"><img class="slide-right" src="/static/assets/svg/sf_logo.svg" width="90px"></a>
-          <h3><b>{{ strings.login_to }} {{ meta.service_name }}</b></h3>
-          
-          <div class="trusted-badge">
-            {% if meta.trusted %}
-                <span id="verified_icon" class="material-symbols-outlined" style="color: #34A843">verified</span>
-                <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
-                <p style="color: #34A843"><b>{{ service_after_login }}</b></p>
+                    <a class="mdl-button mdl-js-button mdl-button--raised rubik"
+                        style="border-radius: 10px; background-color: #a0e0e0; width: 150px; margin-top: 20px"
+                        href="/">
+                        {{ strings.back }}
+                    </a>
+                </div>
             {% else %}
-                <span id="verified_icon" class="material-symbols-outlined" style="color: red">priority_high</span>
-                <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.not_trusted_service }}</div>
-                <p style="color: red"><b>{{ service_after_login }}</b></p>
+                <div>
+                    <a href="/"><img class="slide-right" src="/static/assets/svg/sf_logo.svg" width="90px" alt="Logo"></a>
+                    <h2>{{ strings.login_to }} {{ meta.service_name }}</h2>
+    
+                    <div class="sid-layout_login-security">
+                        {% if meta.trusted %}
+                            <span id="verified_icon" class="material-symbols-outlined sid_verified">verified</span>
+                            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
+                            <p class="sid_verified"><b>{{ service_after_login }}</b></p>
+                        {% else %}
+                            <span id="unverified_icon" class="material-symbols-outlined sid_unverified">priority_high</span>
+                            <div class="mdl-tooltip" data-mdl-for="unverified_icon">{{ strings.not_trusted_service }}</div>
+                            <p class="sid_unverified"><b>{{ service_after_login }}</b></p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="sid-layout_oauth-info">
+                        <p>
+                            {{ service_wants_to_login | safe }}<br> <br>
+                            {{ strings.only_permit_you_know }}
+                        </p>
+                    </div>
+                    
+    
+                    <div class="form-data">
+                        <form id="oauth-form" action="/v2/{{ lang }}/login/oauth_dialog/{{ meta.service }}?code={{ code }}" method="post">
+                            <input id="show-dialog" class="smd-component_button-medium smd-color_mediumslateblue" type="button" value="{{ strings.allow }}" onclick="submitFormWithAnimation()">
+                        </form>
+                    </div>
+                </div>
             {% endif %}
-          </div>
-
-          <h6 style="font-weight: 600" class="rubik-font--default">
-            {{ service_wants_to_login | safe }}<br>
-            <div style="width: 600px; margin-top: 10px;">{{ strings.only_permit_you_know }}</div>
-          </h6>
-      
-          <div class="form-data">
-            <form action="/v2/{{ lang }}/login/oauth_dialog/{{ meta.service }}?code={{ code }}" method="post">      
-              <input id="show-dialog" class="mdl-button mdl-js-button mdl-button--raised rubik"
-                style="border-radius: 10px; background-color: #a0e0e0; width: 150px"
-                type="submit" value="{{ strings.allow }}">
-            </form>
         </div>
-      </center>  
     </div>
-  {% endif %}
-</body>
+</center>
 
-</html>
+<script>
+    function submitFormWithAnimation() {
+        var form = document.getElementById('oauth-form');
+
+        var card = document.getElementById('oauth-dialog');
+        card.classList.remove('sid-keyframe_slide-right');
+        card.classList.add('sid-keyframe_slide-out-top');
+
+        setTimeout(function() {
+            form.submit();
+        }, 1000); 
+    }
+</script>
+{% endblock content %}
