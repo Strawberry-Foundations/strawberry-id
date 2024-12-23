@@ -19,9 +19,15 @@
             <div class="smd-component_dropdown">
                 <button class="smd-component_dropdown-dropbtn" onclick="toggleDropdown()">
                     {{ user.full_name }}
-                    <div class="smd-layout_navbar-profile-picture">
-                        <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
-                    </div>
+                    {% if user.strawberry_one == "true" %}
+                        <div class="smd-layout_navbar-profile-picture smd-layout_navbar-profile-picture--one">
+                            <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
+                        </div>
+                    {% else %}
+                        <div class="smd-layout_navbar-profile-picture">
+                            <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
+                        </div>
+                    {% endif %}
                 </button>
 
                 <div class="smd-component_dropdown-content">
@@ -30,9 +36,15 @@
 
                         <div class="smd-component_dropdown-profile">
                             <div class="smd-component_dropdown-profile-name">@{{ user.username }}</div>
-                            <div class="smd-component_dropdown-profile-picture">
-                                <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
-                            </div>
+                            {% if user.strawberry_one == "true" %}
+                                <div class="smd-component_dropdown-profile-picture smd-component_dropdown-profile-picture--one">
+                                    <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
+                                </div>
+                            {% else %}
+                                <div class="smd-component_dropdown-profile-picture">
+                                    <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
+                                </div>
+                            {% endif %}
                         </div>
                         <hr>
                     </div>
