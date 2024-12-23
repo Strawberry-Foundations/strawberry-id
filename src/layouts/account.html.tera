@@ -2,7 +2,7 @@
 
 {% block content %}
 <center>
-  <div class="main-content">
+  <div class="smd-layout_main">
     <h1><b>{{ strings.account_settings }}</b></h1>
     <h4>@{{ user.username }}</h4>
   </div>

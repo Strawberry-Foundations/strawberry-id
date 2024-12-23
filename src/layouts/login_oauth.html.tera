@@ -1,4 +1,4 @@
-{% extends "base/base_login" %}
+{% extends "base/base" %}
 
 {% block content %}
 <center>
