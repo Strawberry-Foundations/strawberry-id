@@ -1,23 +1,30 @@
-<footer>
-  <center>
-    <div class="footer">
-      <hr>
-      <h4 class="footer--organization-name"><b>© Strawberry Foundations 2021 - 2024</b></h4>
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/stylesheet/footer.css">
+{% endblock stylesheet %}
 
-      {% if lang == "de" %}
-        <h4 class="footer-region">Deutschland ({{ lang }})</h4>
-      {% else %}
-        <h4 class="footer-region">United States ({{ lang }})</h4>
-      {% endif %}
+<footer class="sid-layout_footer">
+    <center>
+        <hr>
+        <h3>© Strawberry Foundations 2021 - 2025</h3>
 
-      <p class="footer--privacy-notice">{{ strings.privacy_notice }}</p>
+        <p>{{ strings.privacy_notice }}</p>
 
-      <div class="footer-links">
-        <a class="footer--link" href="https://strawberryfoundations.xyz/{{ lang }}/policies/privacy">{{ strings.privacy_policy }}</a>
-        <a class="footer--link" href="https://strawberryfoundations.xyz/{{ lang }}/policies/terms">{{ strings.terms_of_service }}</a>
-      </div>
+        <div class="footer-links">
+            <a class="footer--link" href="https://strawberryfoundations.xyz/{{ lang }}/policies/privacy">{{ strings.privacy_policy }}</a>
+            <a class="footer--link" href="https://strawberryfoundations.xyz/{{ lang }}/policies/terms">{{ strings.terms_of_service }}</a>
+        </div>
+        <br>
 
-      <img class="footer-logo" src="/static/assets/svg/sf_logo_small.svg" width="50px">
-    </div>
-  </center>
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <img src="/static/assets/svg/sf_logo_small.svg" width="50px">
+            <div style="margin-left: 16px;">
+                {% if lang == "de" %}
+                <h4>Deutschland ({{ lang }})</h4>
+                {% else %}
+                <h4>United States ({{ lang }})</h4>
+                {% endif %}
+            </div>
+            
+        </div>
+    </center>
 </footer>
