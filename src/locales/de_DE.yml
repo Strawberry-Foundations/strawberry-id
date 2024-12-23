@@ -18,6 +18,7 @@ str_continue: Weiter
 back: Zurück
 allow: Erlauben
 goto_root: Zur Startseite
+create_account_short: Account erstellen
 
 # Content Strings
 strawberry_id_title: Ein Account - für alle Produkte von Strawberry Foundations
