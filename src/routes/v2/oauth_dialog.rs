@@ -47,7 +47,7 @@ pub async fn oauth_permit_dialog(lang: &str, service: &str, params: ApiParams, s
         .replace("%1", meta.service_name.as_str())
         .replace("%2", format!("<u>{}</u>", code).as_str());
 
-    AnyResponder::Template(Template::render("oauth_dialog", context! {
+    AnyResponder::Template(Template::render("oauth/dialog", context! {
         title: &strings.login,
         lang: &lang,
         strings: &strings,
@@ -102,7 +102,7 @@ pub async fn oauth_permit_dialog_post(lang: &str, service: &str, params: ApiPara
 
     let login_success_subtitle = strings.login_success_subtitle.replace("%s", meta.service_name.as_str());
 
-    AnyResponder::Template(Template::render("oauth_dialog_success", context! {
+    AnyResponder::Template(Template::render("oauth/success", context! {
         title: &strings.login,
         lang: &lang,
         strings: &strings,

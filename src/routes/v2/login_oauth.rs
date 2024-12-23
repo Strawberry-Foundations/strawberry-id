@@ -57,7 +57,7 @@ pub async fn login_oauth(lang: &str, state: &State<AppState>, service: &str, jar
         None => return AnyResponder::Redirect(Box::from(Redirect::to(format!("/v2/{lang}/login?service={}&oauth=true", meta.service))))
     }
 
-    AnyResponder::Template(Template::render("login_oauth", context! {
+    AnyResponder::Template(Template::render("oauth/login", context! {
         title: &strings.login,
         strings: &strings,
         lang: &lang,
@@ -97,7 +97,7 @@ pub async fn login_oauth_post(lang: &str, service: &str, form: Form<OAuthForm>, 
         meta.error = true;
         meta.info_message = strings.error_invalid_code;
 
-        AnyResponder::Template(Template::render("login_oauth", context! {
+        AnyResponder::Template(Template::render("oauth/login", context! {
             title: &strings.login,
             strings: &strings_clone,
             lang: &lang,
@@ -128,7 +128,7 @@ pub async fn login_oauth_post(lang: &str, service: &str, form: Form<OAuthForm>, 
             meta.info_message = strings.error_invalid_code;
         }
 
-        AnyResponder::Template(Template::render("login_oauth", context! {
+        AnyResponder::Template(Template::render("oauth/login", context! {
             title: &strings.login,
             strings: &strings_clone,
             lang: &lang,
