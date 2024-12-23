@@ -2,6 +2,12 @@
     color: white;
 }
 
+.sid-layout_footer-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .sid-layout_footer a {
     color: #ffad69;
 }
