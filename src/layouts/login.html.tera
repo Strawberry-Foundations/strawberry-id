@@ -7,7 +7,15 @@
 
 {% block content %}
 <center>
-    <div class="smd-layout_main">
+    <div id="error-dialog" class="smd-component_card sid-layout_login-dialog">
+        <h2>{{ strings.login_error }}</h2>
+        <p>{{ meta.info_message }}</p>
+        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue" style="border-radius: 10px; background-color: #e0e0e0">
+            {{ strings.close }}
+        </button>
+    </div>
+    
+    <div class="smd-layout_main" id="background">
         <div class="smd-component_card sid-layout_login smd-component_base-shadow">
             <div class="sid-layout_login-header">
                 <img src="/static/assets/svg/sf_logo.svg">
@@ -66,14 +74,6 @@
                 </form>
 
                 {% if meta.error %}
-                    <dialog id="error-dialog" class="smd-component_card sid-layout_login-dialog">
-                        <h2>{{ strings.login_error }}</h2>
-                        <p>{{ meta.info_message }}</p>
-                        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue" style="border-radius: 10px; background-color: #e0e0e0">
-                            {{ strings.close }}
-                        </button>
-                    </dialog>
-
                     <script>
                         var modal = document.getElementById("error-dialog");
 
@@ -81,6 +81,7 @@
 
                         window.onload = function () {
                             modal.style.display = "block";
+                            document.getElementById('background').classList.add('sid-layout_main-blur');
                         };
 
                         var encodedString = '{{ external_params }}';
@@ -90,8 +91,8 @@
                         function closeModal() {
                             modal.style.display = "none";
                             window.location.href = "/v2/{{ lang }}/login" + decodedString;
+                            document.getElementById('background').classList.remove('sid-layout_main-blur');
                         }
-
                     </script>
                 {% endif %}
             </div>
@@ -99,3 +100,4 @@
     </div>
 </center>
 {% endblock content %}
+
