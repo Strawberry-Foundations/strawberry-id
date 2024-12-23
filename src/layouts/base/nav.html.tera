@@ -26,8 +26,7 @@
 
                 <div class="smd-component_dropdown-content">
                     <div class="smd-component_dropdown-header">
-                        <a href="/v2/{{ lang }}"><img src="/static/assets/svg/sf_logo.svg"
-                                class="smd-component_dropdown-logo"></a>
+                        <a href="/v2/{{ lang }}"><img src="/static/assets/svg/sf_logo.svg" class="smd-component_dropdown-logo"></a>
 
                         <div class="smd-component_dropdown-profile">
                             <div class="smd-component_dropdown-profile-name">@{{ user.username }}</div>
@@ -39,11 +38,11 @@
                     </div>
 
                     <div class="smd-component_dropdown-content-main">
-                        <a href="/profile">
+                        <a href="/v2/{{ lang }}/profile">
                             <span class="material-symbols-outlined material-symbols-outlined--ul">person</span>
                             <span class="smd-component_dropdown-content-main-text">{{ strings.my_profile }}</span>
                         </a>
-                        <a href="/settings">
+                        <a href="/v2/{{ lang }}/account">
                             <span class="material-symbols-outlined material-symbols-outlined--ul">settings</span>
                             <span class="smd-component_dropdown-content-main-text">{{ strings.settings }}</span>
                         </a>
