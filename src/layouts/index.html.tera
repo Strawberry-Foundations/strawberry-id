@@ -47,3 +47,7 @@
 </center>
 
 {% endblock content %}
+
+{% block footer %}
+{% include "base/footer" %}
+{% endblock footer %}

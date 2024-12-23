@@ -53,7 +53,7 @@
 <body class="smd-layout_body">
     {% include "base/nav" %}
     {% block content %}{% endblock content %}
-    {% include "base/footer" %}
+    {% block footer %}{% endblock footer %}
 </body>
 
 </html>
