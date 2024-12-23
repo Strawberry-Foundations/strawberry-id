@@ -20,6 +20,7 @@ allow: Allow
 goto_root: To the homepage
 create_account_short: Create an account
 developer_documentation: Developer documentation
+my_profile: My Profile
 
 # Content Strings
 strawberry_id_title: One account - for all Strawberry Foundations products
