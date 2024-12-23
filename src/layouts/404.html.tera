@@ -6,31 +6,28 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <link rel="stylesheet" href="/static/css/404.css">
-  <link rel="stylesheet" href="/static/index.css">
-  <link rel="stylesheet" href="/static/basic.css">
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://dl.strawberryfoundations.org/w3/static/smv3/css/layout/base.css">
+  <link rel="stylesheet" href="https://dl.strawberryfoundations.org/w3/static/smv3/css/components/base.css">
+  <link rel="stylesheet" href="/static/stylesheet/404.css">
 
   <link rel="icon" href="/static/assets/svg/sid_lowercase.svg">
   
-  <title>404 - Strawberry Foundations</title>
+  <title>404 Not Found - Strawberry ID</title>
 </head>
 
-<body>
-  <center>
-    <div class="box-404">
-      <div class="box-left">
-        <img class="box-left--image" src="/static/assets/sf_logo.png">
-      </div>
+<body class="smd-layout_body">
+    <center>
+        <div class="smd-layout_main sid-layout_404">
+            <div class="box-left">
+                <img class="box-left--image" src="/static/assets/sf_logo.png">
+            </div>
 
-      <div class="box-right">
-        <h1 class="rubik">The strawberries don't grow here.</h1>
-        <h3>The page at {{ uri }} does not exist!</h3>
-      </div>
-    </div>
-  </center>
+            <div class="box-right">
+                <h1>The strawberries don't grow here.</h1>
+                <h3>The page at {{ uri }} does not exist!</h3>
+            </div>
+        </div>
+    </center>
 </body>
 
 </html>
