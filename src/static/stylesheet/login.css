@@ -1,0 +1,37 @@
+.sid-layout_login {
+    height: auto !important;
+    width: 790px !important;
+}
+
+.sid-layout_login-header img {
+    position: relative;
+    left: -330px;
+    width: 100px;
+    display: inline-block;
+}
+
+.sid-layout_login-header h2 {
+    margin-top: -70px;
+}
+
+.sid-layout_login-security {
+    margin-top: 30px;
+}
+
+.sid_verified {
+    color: #34A843
+}
+
+.sid_unverified {
+    color: red
+}
+
+.sid-layout_login-main {
+    margin-top: 40px;
+    left: 20%;
+    right: 20%
+}
+
+.sid-layout_login-main-submit {
+    margin-top: 36px;
+}
