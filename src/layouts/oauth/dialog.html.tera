@@ -12,15 +12,13 @@
         <div class="smd-component_card sid-layout_login sid-layout_oauth-login smd-component_base-shadow sid-keyframe_slide-right" id="oauth-dialog">
             {% if meta.error %}
                 <div>
-                    <a href="/"><img class="slide-tpü" src="/static/assets/svg/sf_logo.svg" width="90px" alt="Logo"></a>
+                    <a href="/"><img src="/static/assets/svg/sf_logo.svg" width="90px" alt="Logo"></a>
                     <h2>{{ strings.login_not_possible }}</h2>
-                    <h6><b>{{ strings.login_not_possible_invalid_code }}</b></h6>
+                    <p>{{ strings.login_not_possible_invalid_code }}</p>
 
-                    <a class="mdl-button mdl-js-button mdl-button--raised rubik"
-                        style="border-radius: 10px; background-color: #a0e0e0; width: 150px; margin-top: 20px"
-                        href="/">
+                    <button class="smd-component_button-medium smd-color_mediumslateblue" onclick="submitFormWithAnimationHref()">
                         {{ strings.back }}
-                    </a>
+                    </button>
                 </div>
             {% else %}
                 <div>
@@ -45,7 +43,6 @@
                             {{ strings.only_permit_you_know }}
                         </p>
                     </div>
-                    
     
                     <div class="form-data">
                         <form id="oauth-form" action="/v2/{{ lang }}/login/oauth_dialog/{{ meta.service }}?code={{ code }}" method="post">
@@ -68,6 +65,16 @@
 
         setTimeout(function() {
             form.submit();
+        }, 1000); 
+    }
+
+    function submitFormWithAnimationHref() {
+        var card = document.getElementById('oauth-dialog');
+        card.classList.remove('sid-keyframe_slide-right');
+        card.classList.add('sid-keyframe_slide-out-top');
+
+        setTimeout(function() {
+            window.location.href = "/";
         }, 1000); 
     }
 </script>

@@ -55,3 +55,8 @@
     animation: slide-right 2s;
 }
 
+.sid-layout_oauth-code-info {
+    position: absolute;
+    left: 50px;
+    right: 50px;
+}

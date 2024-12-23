@@ -1,59 +1,79 @@
 {% extends "base/base" %}
 
+{% block nav %}
+{% include "base/nav" %}
+{% endblock nav %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/stylesheet/login.css">
+<link rel="stylesheet" href="/static/stylesheet/base.css">
+<link rel="stylesheet" href="/static/stylesheet/footer.css">
+<link rel="stylesheet" href="/static/stylesheet/oauth.css">
+{% endblock stylesheet %}
+
 {% block content %}
 <center>
-  <div class="login-area">
-    <div class="login-area--top">
-      <img src="/static/assets/svg/sf_logo.svg">
-      <h3><b>{{ strings.login }}</b></h3>
-      <h4 style="font-size: 20px"><b>{{ meta.service_name }}</b></h4>
-      <p>{{ strings.continue_code_input }}</p>
-    </div>
-    
-    <div class="login-area--security">
-      <div class="trusted-badge">
-        {% if meta.trusted %}
-            <span id="verified_icon" class="material-symbols-outlined" style="color: #34A843">verified</span>
-            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
-            <p style="color: #34A843"><b>{{ service_after_login }}</b></p>
-        {% else %}
-            <span id="verified_icon" class="material-symbols-outlined" style="color: red">priority_high</span>
-            <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.not_trusted_service }}</div>
-            <p style="color: red"><b>{{ service_after_login }}</b></p>
-        {% endif %}
-      </div>
-    </div>
+    <div class="smd-layout_main">
+        <div class="smd-component_card sid-layout_login smd-component_base-shadow">
+            <div class="sid-layout_login-header">
+                <img src="/static/assets/svg/sf_logo.svg">
+                <h2>{{ strings.login }}<br>{{ meta.service_name }}</h2>
+                <p>{{ strings.continue_code_input }}</p>
+            </div>
 
-    <div class="login-area--main">
-      <form action="/v2/{{ lang }}/login/oauth/{{ meta.service }}" method="post">
+            <div class="sid-layout_login-security">
+                {% if meta.trusted %}
+                    <span id="verified_icon" class="material-symbols-outlined sid_verified">verified</span>
+                    <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
+                    <p class="sid_verified"><b>{{ service_after_login }}</b></p>
+                {% else %}
+                    <span id="unverified_icon" class="material-symbols-outlined sid_unverified">priority_high</span>
+                    <div class="mdl-tooltip" data-mdl-for="unverified_icon">{{ strings.not_trusted_service }}</div>
+                    <p class="sid_unverified"><b>{{ service_after_login }}</b></p>
+                {% endif %}
+            </div>
 
-        <label class="input-hint--small">{{ strings.code }}</label>
-        <div class="input-container input-container--username" style="margin-top: 110px;">
-          <input type="text" id="code" name="code" class="input-field" onblur="unfocus('code')" pattern="-?[0-9]*(\.[0-9]+)?" required>
-          <label for="code" class="input-hint">{{ strings.code }}</label>
-          <span class="mdl-textfield__error">{{ strings.error_invalid_code }}</span>
+            <div class="sid-layout_login-main">
+                <form action="/v2/{{ lang }}/login/oauth/{{ meta.service }}" method="post">
+                    <div class="smd-component_textarea">
+                        <label class="smd-component_textfield-hint-small">{{ strings.code }}</label>
+            
+                        <input type="text" id="code" name="code" class="smd-component_textfield" onblur="unfocus('code')" pattern="-?[0-9]*(\.[0-9]+)?" required>
+                        <label for="code" class="smd-component_textfield-hint">{{ strings.code }}</label>
+                    </div>
+
+                    {% if meta.error %}
+                    <p class="sid_unverified sid-layout_oauth-code-info"><strong>{{meta.info_message }}</strong></p>
+                    {% else %}
+                    <p class="sid_verified sid-layout_oauth-code-info"><strong>{{meta.info_message }}</strong></p>
+                    {% endif %}
+
+                    <div class="sid-layout_login-main-submit">
+                        <input id="login_submit" class="smd-component_button-medium smd-color_mediumslateblue" style="margin-top: 20px" type="submit" value="{{ strings.str_continue }}">
+                    </div>
+                </form>
+            </div>
         </div>
-
-        {% if meta.error %}
-          <p style="color: red; position: absolute; left: 50px; right: 50px; margin-top: -90px"><strong>{{ meta.info_message }}</strong></p>
-        {% else %}
-          <p style="color: #34A843; position: absolute; left: 50px; right: 50px; margin-top: -90px"><strong>{{ meta.info_message }}</strong></p>
-        {% endif %} 
-
-        <input id="login_submit" class="button-login" type="submit" value="{{ strings.str_continue }}" style="margin-top: 30px;">
-      </form>
     </div>
-  </div>
-  
-  <div class="footer--login">
-    <a style="color: #4F93ED" href="/{{ lang }}/policies/privacy">{{ strings.privacy_policy }}</a>
-    <a style="color: #4F93ED; margin-left: 10px" href="/{{ lang }}/policies/terms">{{ strings.terms_of_service }}</a>
-
-    {% if lang == "de" %}
-      <label style="margin-left: 30px" class="rubik">Deutschland ({{ lang }})</label>
-    {% else %}
-      <label style="margin-left: 30px" class="rubik">United States ({{ lang }})</label>
-    {% endif %}
-  </div>
 </center>
 {% endblock content %}
+
+{% block footer %}
+<footer class="sid-layout_footer" id="footer">
+    <center>
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <a href="https://strawberryfoundations.org/{{ lang }}">
+                <img src="/static/assets/svg/sf_logo_small.svg" width="50px">
+            </a>
+            <div style="margin-left: 16px;">
+                {% if lang == "de" %}
+                <h4>Deutschland ({{ lang | upper }})</h4>
+                {% else %}
+                <h4>United States ({{ lang | upper }})</h4>
+                {% endif %}
+            </div>
+
+        </div>
+    </center>
+</footer>
+{% endblock footer %}
