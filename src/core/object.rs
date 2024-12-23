@@ -61,6 +61,7 @@ pub struct UserData {
     pub profile_picture_url: String,
     pub account_enabled: String,
     pub cloud_engine_enabled: String,
+    pub strawberry_one: String
 }
 
 #[derive(FromForm)]

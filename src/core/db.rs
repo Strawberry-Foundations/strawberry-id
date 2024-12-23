@@ -69,6 +69,7 @@ impl Database {
             profile_picture_url: user_data.get("profile_picture_url"),
             account_enabled: user_data.get("account_enabled"),
             cloud_engine_enabled: user_data.get("cloud_engine_enabled"),
+            strawberry_one: user_data.get("strawberry_one"),
         }
     }
 }
