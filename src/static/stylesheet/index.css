@@ -1,0 +1,44 @@
+.sid-layout_main-hr {
+    margin-top: 56px;
+    width: 35cm;
+    border-top: 1px solid #3e4245;
+}
+
+.sid-layout_main-header img {
+    width: 150px;
+}
+
+.sid-layout_main-header h2 {
+    font-weight: normal;
+}
+
+
+.sid-layout_main-subheader {
+    margin-top: 50px;
+}
+
+.sid-layout_main-subheader h2 {
+    font-weight: normal;
+}
+
+
+.sid-layout_main-subcontent-cards {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 64px
+}
+
+.sid-layout_main-subcontent-card {
+    height: 250px !important;
+    width: 300px !important;
+}
+
+.sid-layout_main-subcontent-card h3 {
+    font-weight: normal;
+}
+
+.sid-layout_main-subcontent-card h2 {
+    margin-top: 0px;
+}
