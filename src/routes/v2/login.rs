@@ -7,41 +7,34 @@ use rocket_dyn_templates::{context, Template};
 
 use crate::core::locale::{Language, LANGUAGES, Messages};
 use crate::core::object::{CodeType, LoginForm, LoginMeta};
-use crate::core::params::{LoginParams, PostLoginParams};
+use crate::core::params::LoginParams;
 use crate::core::state::AppState;
 use crate::core::system_core::{Account, AnyResponder, verify_password};
-use crate::core::uuid::generate_random_uuid;
-use crate::utilities::name_parser;
-use crate::global::{ACCOUNTS, CONFIG, CORE, DATABASE};
-
+use crate::global::{CORE, DATABASE};
 
 pub async fn template_responder(
-    strings: Messages, account: Account,
-    params: PostLoginParams, uuid: String, external_params: String
-) -> AnyResponder {
-
+    strings: Messages, lang: &str, params: LoginParams, meta: LoginMeta,
+    full_params: &String, redirect_after_login: &String, service_after_login: &String) -> AnyResponder {
     AnyResponder::Template(Template::render("login", context! {
         title: &strings.login,
         strings: &strings,
-        lang: &account.lang,
-        meta: &account.meta,
+        lang: &lang,
+        meta: &meta,
         params: &params,
-        redirect_after_login: &account.redirect_after_login,
-        service_after_login: &account.service_after_login,
-        uuid: &uuid,
-        external_params: &external_params,
+        redirect_after_login: &redirect_after_login,
+        service_after_login: &service_after_login,
+        full_params: &full_params
     }))
 }
 
 pub async fn catch_error(mut account: Account, error_message: &String, mut external_params: String) -> (Account, String){
     account.meta.error = true;
     account.meta.info_message = error_message.clone();
-    account.meta.animation = String::from("none");
 
     if account.meta.redirect_after_login {
         write!(external_params, "?redirect={}", account.redirect_addr).unwrap()
     }
-    else if account.meta.service_login {
+    else if account.meta.service_after_login {
         write!(external_params, "?service={}", account.params.service).unwrap();
 
         if account.params.oauth {
@@ -51,7 +44,6 @@ pub async fn catch_error(mut account: Account, error_message: &String, mut exter
 
     (account, external_params)
 }
-
 
 #[get("/login")]
 pub async fn login_no_lang(lang: Option<Language>) -> Redirect {
@@ -63,68 +55,23 @@ pub async fn login_no_lang(lang: Option<Language>) -> Redirect {
 }
 
 #[get("/<lang>/login?<params..>", rank = 3)]
-pub async fn login(lang: &str, state: &State<AppState>, mut params: LoginParams) -> Template {
-    let mut meta = LoginMeta {
-        animation: String::from("slide-in-login"),
-        ..Default::default()
-    };
-
-    meta.code = 0;
-
+pub async fn login(lang: &str, state: &State<AppState>, mut params: LoginParams, uri: &rocket::http::uri::Origin<'_>) -> Template {
     if !LANGUAGES.contains(&lang) {
         return Template::render("404", context! {
             uri: format!("/v2/{lang}/login")
         });
     };
 
-    meta.language = lang.to_string();
-
+    let meta = LoginMeta::collect(&mut params, lang, state);
     let strings = state.messages.get(lang).cloned().unwrap();
-
-    if !params.redirect.trim().is_empty() {
-        meta.redirect_after_login = true;
-
-        params.oauth = false;
-        params.redirect = params.redirect.replace("http://", "").replace("https://", "");
-
-        if params.hl.trim().is_empty() {
-            params.hl = lang.to_string();
-        }
-
-        meta.trusted_web = CONFIG.vars.trusted_sites.contains(&params.redirect.to_lowercase());
-    } else {
-        meta.redirect_after_login = false;
-    }
-
-    if !params.service.trim().is_empty() && !meta.redirect_after_login {
-        meta.service_login = !params.oauth;
-        meta.service_name = name_parser(state, params.service.clone());
-        meta.trusted_service = CONFIG.vars.trusted_services.contains(&params.service.to_lowercase());
-    }
-    else {
-        meta.service_login = false;
-    }
-
-    if params.code != 0 || !params.code.to_string().len() < 10 {
-        meta.code = params.code;
-    }
 
     let redirect_after_login = strings.redirect_after_login.replace("%s", params.redirect.as_str());
     let service_after_login = strings.service_after_login.replace("%s", meta.service_name.as_str());
 
-    let uuid = generate_random_uuid();
-
-    ACCOUNTS.write().await.insert(
-        uuid.clone(),
-        Account {
-            redirect_addr: params.redirect.clone(),
-            lang: lang.to_string().clone(),
-            meta: meta.clone(),
-            params: params.clone(),
-            redirect_after_login: redirect_after_login.clone(),
-            service_after_login: service_after_login.clone()
-        }
-    );
+    let full_params = match uri.query() {
+        Some(query) => query.to_string(),
+        None => String::new()
+    };
 
     Template::render("login", context! {
         title: &strings.login,
@@ -134,34 +81,36 @@ pub async fn login(lang: &str, state: &State<AppState>, mut params: LoginParams)
         params: &params,
         redirect_after_login: &redirect_after_login,
         service_after_login: &service_after_login,
-        uuid: &uuid
+        full_params: &full_params
     })
 }
 
-
-
-
-#[post("/login?<params..>", data = "<form>")]
-pub async fn login_post(form: Form<LoginForm>, state: &State<AppState>, params: PostLoginParams, jar: &CookieJar<'_>) -> AnyResponder {
-    let external_params = String::new();
+#[post("/<lang>/login?<params..>", data = "<form>")]
+pub async fn login_post(
+    lang: &str, form: Form<LoginForm>, state: &State<AppState>,
+    mut params: LoginParams, jar: &CookieJar<'_>, uri: &rocket::http::uri::Origin<'_>
+) -> AnyResponder {
+    let mut meta = LoginMeta::collect(&mut params, lang, state);
 
     let username = &form.username;
     let password = &form.password;
 
-    let binding = ACCOUNTS.read().await;
-    let binding_account = binding.get(&params.uuid).unwrap();
+    let strings = state.messages.get(lang).cloned().unwrap();
 
-    let account = Account::from_ref(binding_account);
+    let redirect_after_login = strings.redirect_after_login.replace("%s", params.redirect.as_str());
+    let service_after_login = strings.service_after_login.replace("%s", meta.service_name.as_str());
 
-    let uuid = generate_random_uuid();
-
-    let strings = state.messages.get(account.lang.as_str()).cloned().unwrap();
+    let full_params = match uri.query() {
+        Some(query) => query.to_string(),
+        None => String::new()
+    };
 
     let user_base = match DATABASE.get_password(username.to_string()).await {
         Some(res) => res,
         None => {
-            let (account, external_params) = catch_error(account, &strings.wrong_username, external_params).await;
-            return template_responder(strings, account, params, uuid, external_params).await
+            meta.info_message = strings.wrong_username.clone();
+            meta.error = true;
+            return template_responder(strings, lang, params, meta, &full_params, &redirect_after_login, &service_after_login).await
         }
     };
 
@@ -169,66 +118,58 @@ pub async fn login_post(form: Form<LoginForm>, state: &State<AppState>, params: 
         let user_data = DATABASE.get_user_data(user_base.username).await;
         let data = user_data.clone();
 
-        let code = CORE.write().await.generate_code(user_data, CodeType::Website);
-        let uuid_code = CORE.write().await.generate_uuid_code(&code);
-
         if data.account_enabled == "false" {
-            let (account, external_params) = catch_error(account, &strings.account_disabled, external_params).await;
-            return template_responder(strings, account, params, uuid, external_params).await
+            meta.info_message = strings.account_disabled.clone();
+            meta.error = true;
+            return template_responder(strings, lang, params, meta, &full_params, &redirect_after_login, &service_after_login).await
         };
+
+        let code = CORE.write().await.generate_code(user_data, CodeType::Website);
 
         jar.add_private(("_strawberryid.username", data.username.clone()));
         jar.add_private(("_strawberryid.email", data.email.clone()));
         jar.add_private(("_strawberryid.full_name", data.full_name.clone()));
         jar.add_private(("_strawberryid.profile_picture_url", data.profile_picture_url.clone()));
 
-        if account.meta.code != 0 {
+        if meta.code != 0 {
             return AnyResponder::Redirect(Box::from(
                 Redirect::to(format!(
                     "/v2/{}/login/oauth_dialog/{}?code={}",
-                    account.meta.language,
-                    account.params.service,
-                    account.meta.code
+                    meta.language,
+                    params.service,
+                    meta.code
                 ))
             ))
         }
 
-        if account.meta.redirect_after_login {
+        if meta.redirect_after_login {
             AnyResponder::Redirect(Box::from(
                 Redirect::to(format!(
                         "https://{}/callback?hl={}&code={}",
-                        account.redirect_addr,
-                        account.params.hl,
+                        params.redirect,
+                        params.hl,
                         code
                     ))
             ))
         }
-        else if account.meta.service_login {
-            AnyResponder::Redirect(Box::from(
-                Redirect::to(format!(
-                    "/v2/{}/login/service/{}?request_uuid={uuid_code}",
-                    account.meta.language,
-                    account.params.service,
-                ))
-            ))
-        }
-        else if account.params.oauth && !account.meta.service_login {
+        else if params.oauth && !meta.service_after_login {
             AnyResponder::Redirect(Box::from(
                 Redirect::to(format!(
                     "/v2/{}/login/oauth/{}",
-                    account.meta.language,
-                    account.params.service
+                    meta.language,
+                    params.service
                 ))
             ))
         }
         else {
             AnyResponder::Redirect(Box::from(
-                Redirect::to(format!("/v2/{}/account", account.meta.language))
+                Redirect::to(format!("/v2/{}/account", meta.language))
             ))
         }
     }
     else {
-        let (account, external_params) = catch_error(account, &strings.wrong_username_or_password, external_params).await;
-        template_responder(strings, account, params, uuid, external_params).await
+        meta.info_message = strings.wrong_username_or_password.clone();
+        meta.error = true;
+        template_responder(strings, lang, params, meta, &full_params, &redirect_after_login, &service_after_login).await
     }
 }

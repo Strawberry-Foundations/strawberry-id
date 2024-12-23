@@ -81,3 +81,18 @@
         transform: translate(-50%, -50%);
     }
 }
+
+@keyframes slide-out-top {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -150%);
+    }
+}
+
+.sid-layout_login-dialog-slide-out {
+    animation: slide-out-top 1s;
+}

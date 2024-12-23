@@ -6,7 +6,6 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="/static/stylesheet/login.css">
-<link rel="stylesheet" href="/static/stylesheet/base.css">
 <link rel="stylesheet" href="/static/stylesheet/footer.css">
 {% endblock stylesheet %}
 
@@ -15,7 +14,7 @@
     <div id="error-dialog" class="smd-component_card sid-layout_login-dialog">
         <h2>{{ strings.login_error }}</h2>
         <p>{{ meta.info_message }}</p>
-        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue">
+        <button type="button" onclick="closeModal('{{ full_params }}')" class="smd-component_button-small smd-color_mediumslateblue">
             {{ strings.close }}
         </button>
     </div>
@@ -57,7 +56,7 @@
             </div>
 
             <div class="sid-layout_login-main">
-                <form action="/v2/login?uuid={{ uuid }}" method="post">
+                <form action="/v2/{{ lang }}/login?{{ full_params }}" method="post">
                     <div class="smd-component_textarea">
                         <label class="smd-component_textfield-hint-small">{{ strings.email_username }}</label>
             
@@ -90,13 +89,13 @@
                             document.getElementById('footer').classList.add('sid-layout_main-blur');
                         };
 
-                        var encodedString = '{{ external_params }}';
-
-                        var decodedString = decodeURIComponent(encodedString.replace(/&amp;/g, '&'));
-
-                        function closeModal() {
-                            modal.style.display = "none";
-                            window.location.href = "/v2/{{ lang }}/login" + decodedString;
+                        function closeModal(full_params) {
+                            modal.classList.add('sid-layout_login-dialog-slide-out');
+                            setTimeout(function() {
+                                modal.style.display = "none";
+                            }, 1000); 
+                            
+                            
                             document.getElementById('background').classList.remove('sid-layout_main-blur');
                             document.getElementById('footer').classList.remove('sid-layout_main-blur');
                         }
