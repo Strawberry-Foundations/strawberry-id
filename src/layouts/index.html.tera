@@ -1,5 +1,9 @@
 {% extends "base/base" %}
 
+{% block nav %}
+{% include "base/nav" %}
+{% endblock nav %}
+
 {% block stylesheet %}
 <link rel="stylesheet" href="/static/stylesheet/index.css">
 {% endblock stylesheet %}

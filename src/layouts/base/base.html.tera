@@ -51,7 +51,7 @@
 </head>
 
 <body class="smd-layout_body">
-    {% include "base/nav" %}
+    {% block nav %}{% endblock nav %}
     {% block content %}{% endblock content %}
     {% block footer %}{% endblock footer %}
 </body>

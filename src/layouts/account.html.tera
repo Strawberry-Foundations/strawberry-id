@@ -1,5 +1,9 @@
 {% extends "base/base" %}
 
+{% block nav %}
+{% include "base/nav" %}
+{% endblock nav %}
+
 {% block content %}
 <center>
   <div class="smd-layout_main">
