@@ -24,7 +24,7 @@
                 <h4>United States ({{ lang }})</h4>
                 {% endif %}
             </div>
-            
+
         </div>
     </center>
 </footer>
