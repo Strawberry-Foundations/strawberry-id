@@ -7,7 +7,7 @@ pub struct Database {
     pub location: String,
 }
 
-pub struct UBaseStruct {
+pub struct UserBasic {
     pub username: String,
     pub password: String,
 }
@@ -25,13 +25,13 @@ impl Database {
         }
     }
 
-    pub async fn get_password(&self, username: String) -> Option<UBaseStruct> {
+    pub async fn get_password(&self, username: String) -> Option<UserBasic> {
         match sqlx::query("SELECT username, password FROM users WHERE username = ?")
             .bind(username.clone())
             .fetch_one(&self.connection)
             .await {
             Ok(row) => {
-                Some(UBaseStruct {
+                Some(UserBasic {
                     username: row.get("username"),
                     password: row.get("password")
                 })
@@ -42,7 +42,7 @@ impl Database {
                     .fetch_one(&self.connection)
                     .await {
                     Ok(row) => {
-                        Some(UBaseStruct {
+                        Some(UserBasic {
                             username: row.get("username"),
                             password: row.get("password")
                         })

@@ -1,5 +1,11 @@
 #![allow(clippy::blocks_in_conditions, clippy::useless_conversion)]
+
+use rocket::State;
 use serde::{Deserialize, Serialize};
+use crate::core::params::LoginParams;
+use crate::core::state::AppState;
+use crate::global::CONFIG;
+use crate::utilities::name_parser;
 
 #[derive(Default, Deserialize, Serialize, Clone)]
 pub struct LoginMeta {
@@ -9,13 +15,12 @@ pub struct LoginMeta {
 
     /// Flags
     pub redirect_after_login: bool,
-    pub service_login: bool,
+    pub service_after_login: bool,
     pub trusted_web: bool,
     pub trusted_service: bool,
 
     /// Generic strings
     pub service_name: String,
-    pub animation: String,
     pub language: String,
 
     /// Vars
@@ -68,4 +73,42 @@ pub struct UserData {
 pub struct OAuthForm {
     #[field(name = "code", default = 0)]
     pub code: u64,
+}
+
+impl LoginMeta {
+    pub fn collect(params: &mut LoginParams, lang: &str, state: &State<AppState>) -> Self {
+        let mut meta = LoginMeta::default();
+        meta.code = 0;
+        meta.language = lang.to_string();
+
+        if !params.redirect.trim().is_empty() {
+            meta.redirect_after_login = true;
+
+            params.oauth = false;
+            params.redirect = params.redirect.replace("http://", "").replace("https://", "");
+
+            if params.hl.trim().is_empty() {
+                params.hl = lang.to_string();
+            }
+
+            meta.trusted_web = CONFIG.vars.trusted_sites.contains(&params.redirect.to_lowercase());
+        } else {
+            meta.redirect_after_login = false;
+        }
+
+        if !params.service.trim().is_empty() && !meta.redirect_after_login {
+            meta.service_after_login = !params.oauth;
+            meta.service_name = name_parser(state, params.service.clone());
+            meta.trusted_service = CONFIG.vars.trusted_services.contains(&params.service.to_lowercase());
+        }
+        else {
+            meta.service_after_login = false;
+        }
+
+        if params.code != 0 || !params.code.to_string().len() < 10 {
+            meta.code = params.code;
+        }
+        
+        meta
+    }
 }
