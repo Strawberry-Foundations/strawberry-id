@@ -2,6 +2,7 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="/static/stylesheet/login.css">
+<link rel="stylesheet" href="/static/stylesheet/base.css">
 {% endblock stylesheet %}
 
 {% block content %}
@@ -65,18 +66,12 @@
                 </form>
 
                 {% if meta.error %}
-                    <dialog id="error-dialog" class="login-area dialog-box-login">
-                        <h4 class="mdl-dialog__title rubik" style="color: red"><b>{{ strings.login_error }}</b></h4>
-                        <div class="mdl-dialog__content rubik">
-                            <p style="color: black;">{{ meta.info_message }}</p>
-                        </div>
-                        <div class="mdl-dialog__actions">
-                            <button type="button" onclick="closeModal()"
-                                class="mdl-button mdl-js-button mdl-button--raised close rubik"
-                                style="border-radius: 10px; background-color: #e0e0e0">
-                                {{ strings.close }}
-                            </button>
-                        </div>
+                    <dialog id="error-dialog" class="smd-component_card sid-layout_login-dialog">
+                        <h2>{{ strings.login_error }}</h2>
+                        <p>{{ meta.info_message }}</p>
+                        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue" style="border-radius: 10px; background-color: #e0e0e0">
+                            {{ strings.close }}
+                        </button>
                     </dialog>
 
                     <script>
@@ -102,6 +97,5 @@
             </div>
         </div>
     </div>
-
 </center>
 {% endblock content %}
