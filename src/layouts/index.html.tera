@@ -1,45 +1,52 @@
 {% extends "base/base" %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/stylesheet/index.css">
+{% endblock stylesheet %}
+
 {% block content %}
 <center>
-  <div class="main-content">
-    <div class="main-header">
-      <img src="/static/assets/svg/sf_logo_small.svg">
-      <h2>{{ strings.strawberry_id_title }}</h2>
-      <h4>{{ strings.strawberry_id_subtitle }}<br>{{ strings.strawberry_id_subtitle_2 }}</h4>
+    <div class="smd-layout_main sid-layout_main">
+        <div class="sid-layout_main-header">
+            <img src="/static/assets/svg/sf_logo_small.svg">
+            <h1>{{ strings.strawberry_id_title }}</h1>
+            <h2>{{ strings.strawberry_id_subtitle }}<br>{{ strings.strawberry_id_subtitle_2 }}</h2>
+        </div>
+
+        <div class="sid-layout_main-subheader">
+            <h2>{{ strings.already_have_id }}</h2>
+            <a class="smd-component_button-medium" href="/v2/{{ lang }}/login">{{ strings.login }}</a>
+        </div>
+
+        <hr class="sid-layout_main-hr">
+
+        <div class="sid-layout_main-subcontent">
+            <h1>{{ strings.benefits_id }}</h1>
+            
+            <div class="sid-layout_main-subcontent-cards">
+                <div class="smd-component_card sid-layout_main-subcontent-card">
+                    <h2>{{ strings.works_everywhere_title }}</h2>
+                    <hr>
+                    <h3>{{ strings.works_everywhere_description }}</h3>
+                </div>
+            
+                <div class="smd-component_card sid-layout_main-subcontent-card">
+                    <h2>{{ strings.simple_use_title }}</h2>
+                    <hr>
+                    <h3>{{ strings.simple_use_description }}</h3>
+                </div>
+            
+                <div class="smd-component_card sid-layout_main-subcontent-card">
+                    <h2>{{ strings.scaling_title }}</h2>
+                    <hr>
+                    <h3>{{ strings.scaling_description }}</h3>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 64px">{{ strings.convinced }}</h2>
+            <a class="smd-component_button-medium smd-color_lightblue" href="/v2/{{ lang }}/register">{{ strings.register }}</a>
+        </div>
     </div>
-
-    <div class="main-header-subcontent">
-      <h4>{{ strings.already_have_id }}</h4>
-      <a class="button-blue" href="/v2/{{ lang }}/login">{{ strings.login }}</a>
-    </div>
-    <hr>
-
-    <div class="main-subcontent">
-      <h2>{{ strings.benefits_id }}</h2>
-
-      <a class="box-default b1">
-        <h3 id="tunneled" class="white"><b>{{ strings.works_everywhere_title }}</b></h3>
-        <hr>
-        <h4 class="font-family--rubik">{{ strings.works_everywhere_description }}</h4>
-      </a>
-    
-      <a class="box-default b2">
-        <h3 id="tunneled" class="white"><b>{{ strings.simple_use_title }}</b></h3>
-        <hr>
-        <h4 class="font-family--rubik">{{ strings.simple_use_description }}</h4>
-      </a>
-
-      <a class="box-default b3">
-        <h3 id="tunneled" class="white"><b>{{ strings.scaling_title }}</b></h3>
-        <hr>
-        <h4 class="font-family--rubik">{{ strings.scaling_description }}</h4>
-      </a>
-
-      <h3 class="font-family--rubik" style="margin-top: 500px">{{ strings.convinced }}</h3>
-      <a class="button-blue" href="/v2/{{ lang }}/register">{{ strings.register }}</a>
-    </div>
-  </div>
 </center>
 
 {% endblock content %}
