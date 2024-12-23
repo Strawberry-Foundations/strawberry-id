@@ -6,7 +6,6 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="/static/stylesheet/login.css">
-<link rel="stylesheet" href="/static/stylesheet/base.css">
 <link rel="stylesheet" href="/static/stylesheet/footer.css">
 <link rel="stylesheet" href="/static/stylesheet/oauth.css">
 {% endblock stylesheet %}
