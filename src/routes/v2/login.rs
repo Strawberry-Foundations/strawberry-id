@@ -14,7 +14,8 @@ use crate::global::{CORE, DATABASE};
 
 pub async fn template_responder(
     strings: Messages, lang: &str, params: LoginParams, meta: LoginMeta,
-    full_params: &String, redirect_after_login: &String, service_after_login: &String) -> AnyResponder {
+    full_params: &String, redirect_after_login: &String, service_after_login: &String
+) -> AnyResponder {
     AnyResponder::Template(Template::render("login", context! {
         title: &strings.login,
         strings: &strings,
@@ -27,23 +28,6 @@ pub async fn template_responder(
     }))
 }
 
-pub async fn catch_error(mut account: Account, error_message: &String, mut external_params: String) -> (Account, String){
-    account.meta.error = true;
-    account.meta.info_message = error_message.clone();
-
-    if account.meta.redirect_after_login {
-        write!(external_params, "?redirect={}", account.redirect_addr).unwrap()
-    }
-    else if account.meta.service_after_login {
-        write!(external_params, "?service={}", account.params.service).unwrap();
-
-        if account.params.oauth {
-            write!(external_params, "&oauth=true").unwrap();
-        }
-    }
-
-    (account, external_params)
-}
 
 #[get("/login")]
 pub async fn login_no_lang(lang: Option<Language>) -> Redirect {
