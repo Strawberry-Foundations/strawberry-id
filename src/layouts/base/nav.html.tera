@@ -1,70 +1,81 @@
-<header class="mdl-layout__header header" style="background-color: rgba(18,18,18,255);">
-  <div class="mdl-layout__header-row">
-    <span class="mdl-layout-title" style="font-family: Rubik; font-size: 25px">
-      <a href="/"><img style="margin-top: -5px" src="/static/assets/svg/sid_lowercase.svg" width="46px"></a>
-      <strong>Strawberry ID</strong>
-    </span>
+<header class="smd-layout_header">
+    <div class="smd-layout_header-logo">
+        <a href="/">
+            <img src="/static/assets/svg/sf_logo_small.svg" alt="Strawberry ID">
+        </a>
+        <span class="smd-layout_header-title">Accounts</span>
+    </div>
 
-    <div class="spacer"></div>
-
-    <div class="mdl-layout-spacer"></div>
-    <nav class="mdl-navigation mdl-layout--large-screen-only">
-      {% if not is_authenticated %}
-        <a class="mdl-navigation__link" href="/v2/{{ lang }}/login">{{ strings.login }}<i class="material-icons" style="margin-left: 5px;">account_circle</i></a>
-      {% else %}
-        <button id="demo-menu-lower-right" class="mdl-navigation__link button-nocolor" href="">
-          {{ user.full_name }}
-          <img src="{{ user.profile_picture_url }}" class="profile-picture">
-        </button>
-
-        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right" style="width: 300px;">
-          <li style="color: black; padding-left: 20px">
-              <a href="/"><img src="/static/assets/svg/sf_logo.svg" style="width: 70px;"></a>
-              <div style="float: right; margin-right: 20px; margin-top: 10px">
-                  @{{ user.username }} <img src="{{ user.profile_picture_url }}" class="profile-picture">
-              </div>
-          </li>
-
-          {% if user.cloud_engine_enabled == "true" %}
-            <li class="mdl-menu__item round">
-              <a style="text-decoration: none; color: #1f1f1f" href="/v2/{{ lang }}/account">
-                <span class="material-symbols-outlined material-symbols-outlined--ul">dns</span>
-                <div style="margin-left: 33px">Cloud Engine</div>
-              </a>
-            </li>
-          {% else %}
-            <li id="ce" disabled class="mdl-menu__item round">
-              <span class="material-symbols-outlined material-symbols-outlined--ul">dns</span>
-              <div style="margin-left: 33px">{{ strings.cloud_engine }}</div>
-            </li>
-            <div class="mdl-tooltip" data-mdl-for="ce">
-              Cloud Engine has been disabled because you broke the Terms of service.
-            </div>
-          {% endif %}
-            
-          <li class="mdl-menu__item round">
-            <a style="text-decoration: none; color: #1f1f1f" href="/v2/{{ lang }}/account">
-              <span class="material-symbols-outlined material-symbols-outlined--ul">shopping_cart</span>
-              <div style="margin-left: 33px">{{ strings.my_products }}</div>
-            </a>
-          </li>
-
-          <hr>
-          <li class="mdl-menu__item round">
-            <a style="text-decoration: none; color: #1f1f1f" href="/v2/{{ lang }}/account">
-              <span class="material-symbols-outlined material-symbols-outlined--ul">settings</span>
-              <div style="margin-left: 33px">{{ strings.settings }}</div>
-            </a>
-          </li>
-
-          <li class="mdl-menu__item round">
-            <a style="text-decoration: none; color: #1f1f1f" href="/logout?hl={{ lang }}">
-              <span class="material-symbols-outlined material-symbols-outlined--ul">logout</span>
-              <div style="margin-left: 33px">{{ strings.logout }}</div>
-            </a>
-          </li>
-        </ul>
-      {% endif %}
+    <nav class="smd-layout_navbar">
+        <a href="/v2/{{ lang }}">{{ strings.create_account_short }}</a>
+        <a href="https://developers.strawberryfoundations.org/german/strawberry-id/introduction">{{
+            strings.developer_documentation }}</a>
     </nav>
-  </div>
+
+    <div class="smd-layout_navbar-right">
+        {% if not is_authenticated %}
+            <a href="/v2/{{ lang }}/login">{{ strings.login }}</a>
+        {% else %}
+            <div class="smd-component_dropdown">
+                <button class="smd-component_dropdown-dropbtn" onclick="toggleDropdown()">
+                    {{ user.full_name }}
+                    <div class="smd-layout_navbar-profile-picture">
+                        <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
+                    </div>
+                </button>
+
+                <div class="smd-component_dropdown-content">
+                    <div class="smd-component_dropdown-header">
+                        <a href="/v2/{{ lang }}"><img src="/static/assets/svg/sf_logo.svg"
+                                class="smd-component_dropdown-logo"></a>
+
+                        <div class="smd-component_dropdown-profile">
+                            <div class="smd-component_dropdown-profile-name">@{{ user.username }}</div>
+                            <div class="smd-component_dropdown-profile-picture">
+                                <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="smd-component_dropdown-content-main">
+                        <a href="/profile">
+                            <span class="material-symbols-outlined material-symbols-outlined--ul">person</span>
+                            <span class="smd-component_dropdown-content-main-text">{{ strings.my_profile }}</span>
+                        </a>
+                        <a href="/settings">
+                            <span class="material-symbols-outlined material-symbols-outlined--ul">settings</span>
+                            <span class="smd-component_dropdown-content-main-text">{{ strings.settings }}</span>
+                        </a>
+                        <hr>
+                        <a href="/logout">
+                            <span class="material-symbols-outlined material-symbols-outlined--ul">logout</span>
+                            <span class="smd-component_dropdown-content-main-text">{{ strings.logout }}</span>
+                        </a>
+                        <div class="smd-component_dropdown-spacer"></div>
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+
+        <script>
+            function toggleDropdown() {
+                document.querySelector('.smd-component_dropdown-content').classList.toggle('show');
+            }
+
+            window.onclick = function (event) {
+                if (!event.target.matches('.smd-component_dropdown-dropbtn')) {
+                    var dropdowns = document.getElementsByClassName('smd-component_dropdown-content');
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+        </script>
+    </div>
+    <hr>
 </header>
