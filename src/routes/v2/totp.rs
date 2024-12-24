@@ -2,12 +2,12 @@ use rocket::form::Form;
 use rocket::http::CookieJar;
 use rocket::response::Redirect;
 use rocket::State;
-use rocket_dyn_templates::Template;
+use rocket_dyn_templates::{context, Template};
 use crate::core::locale::Messages;
-use crate::core::object::{CodeType, LoginMeta};
+use crate::core::object::{CodeType, LoginMeta, UserData};
 use crate::core::state::AppState;
-use crate::core::system_core::{AnyResponder};
-use crate::global::{CORE};
+use crate::core::system_core::{verify_password, AnyResponder};
+use crate::global::{CORE, DATABASE};
 use crate::core::params::LoginParams;
 use crate::core::totp::StrawberryIdTotp;
 use crate::routes::v2::login::{template_responder, TEMP_STORAGE};
@@ -76,4 +76,72 @@ pub async fn login_totp(
         }
     }
     AnyResponder::Redirect(Box::from(Redirect::to(format!("/v2/{}/login", lang))))
+}
+
+
+#[derive(FromForm)]
+pub struct DisableTotpForm {
+    pub password: String,
+    pub totp_code: String,
+}
+
+#[post("/<lang>/account/totp/disable", data = "<form>")]
+pub async fn disable_totp(
+    lang: &str, form: Form<DisableTotpForm>, state: &State<AppState>, jar: &CookieJar<'_>
+) -> AnyResponder {
+    let strings = state.messages.get(lang).cloned().unwrap();
+    let is_authenticated: bool;
+
+    let user = match jar.get_private("_strawberryid.username") {
+        Some(res) => {
+            is_authenticated = true;
+            DATABASE.get_user_data(res.value().to_string()).await
+        },
+        None => {
+            is_authenticated = false;
+            UserData::default()
+        }
+    };
+
+    if !is_authenticated {
+        return AnyResponder::Template(Template::render("login", context! {
+            title: &strings.login,
+            strings: &strings,
+            lang: &lang,
+            error: &strings.login_required,
+        }));
+    }
+
+    if !StrawberryIdTotp::check(&user.totp_secret.clone(), &form.totp_code) {
+        return AnyResponder::Template(Template::render("account", context! {
+            title: &strings.account_settings,
+            strings: &strings,
+            lang: &lang,
+            is_authenticated: is_authenticated,
+            user: user,
+            action: "disable_totp_failed",
+        }));
+    }
+
+    if !verify_password(user.password.clone(), &form.password) {
+        return AnyResponder::Template(Template::render("account", context! {
+            title: &strings.account_settings,
+            strings: &strings,
+            lang: &lang,
+            is_authenticated: is_authenticated,
+            user: user,
+            action: "disable_totp_failed",
+        }));
+    }
+
+    DATABASE.set_totp(user.username.clone(), "false".to_string()).await.unwrap();
+
+    AnyResponder::Template(Template::render("account", context! {
+        title: &strings.account_settings,
+        strings: &strings,
+        lang: &lang,
+        is_authenticated: is_authenticated,
+        user: user,
+        action: "disable_totp_success",
+    }))
 }
