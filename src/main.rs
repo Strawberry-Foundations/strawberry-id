@@ -14,6 +14,7 @@ use crate::routes::v2::{
     oauth_dialog::{oauth_permit_dialog, oauth_permit_dialog_post},
     register::{register, register_no_lang},
     account::{account, account_no_lang},
+    totp::login_totp
 };
 use crate::routes::v2::api::{
     callback::{api_callback},
@@ -65,6 +66,8 @@ async fn main() {
             
             account,
             account_no_lang,
+
+            login_totp,
         ])
         .mount("/v2/api", routes![
             api_callback,
