@@ -30,6 +30,26 @@
         </form>
     </div>
 
+    <div id="totp-dialog-disable" class="smd-component_card sid-layout_login-dialog smd-component_base-shadow" style="margin-top: 200px;">
+        <h2>{{ strings.disable_2fa }}</h2>
+        <form action="/v2/{{ lang }}/account/totp/disable" method="post">
+            <div class="smd-component_textarea">
+                <label class="smd-component_textfield-hint-small">{{ strings.password }}</label>
+                <input type="password" id="password" name="password" class="smd-component_textfield" required>
+                <label for="password" class="smd-component_textfield-hint">{{ strings.password }}</label>
+            </div>
+            <div class="smd-component_textarea">
+                <label class="smd-component_textfield-hint-small">{{ strings.totp_code }}</label>
+                <input type="text" id="totp_code" name="totp_code" class="smd-component_textfield" required>
+                <label for="totp_code" class="smd-component_textfield-hint">{{ strings.totp_code }}</label>
+            </div>
+            <div class="sid-layout_login-main-submit">
+                <input class="smd-component_button-large smd-color_mediumslateblue" type="submit" value="{{ strings.submit }}">
+            </div>
+        </form>
+    </div>
+    
+
     <div id="totp-dialog-success" class="smd-component_card sid-layout_login-dialog smd-component_base-shadow">
         <h2>{{ strings.setup_totp }}</h2>
         <p>{{ strings.totp_setup_success }}</p>
@@ -42,6 +62,15 @@
     <div id="totp-dialog-failed" class="smd-component_card sid-layout_login-dialog smd-component_base-shadow">
         <h2>{{ strings.setup_totp }}</h2>
         <p>{{ strings.totp_setup_failed }}</p>
+
+        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue">
+            {{ strings.close }}
+        </button>
+    </div>
+
+    <div id="totp-dialog-disable-failed" class="smd-component_card sid-layout_login-dialog smd-component_base-shadow">
+        <h2>{{ strings.disable_2fa }}</h2>
+        <p>{{ strings.totp_disable_failed }}</p>
 
         <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue">
             {{ strings.close }}
@@ -74,6 +103,26 @@
     {% elif action == "setup_totp_failed" %}
         <script>
             var modal = document.getElementById("totp-dialog-failed");
+
+            window.onload = function () {
+                modal.style.display = "block";
+                document.getElementById('background').classList.add('sid-layout_main-blur');
+                document.getElementById('footer').classList.add('sid-layout_main-blur');
+            };
+
+            function closeModal() {
+                modal.classList.add('sid-layout_login-dialog-slide-out');
+                setTimeout(function() {
+                    modal.style.display = "none";
+                }, 1000); 
+                
+                document.getElementById('background').classList.remove('sid-layout_main-blur');
+                document.getElementById('footer').classList.remove('sid-layout_main-blur');
+            }
+        </script>
+    {% elif action == "disable_totp_failed" %}
+        <script>
+            var modal = document.getElementById("totp-dialog-disable-failed");
 
             window.onload = function () {
                 modal.style.display = "block";
@@ -155,7 +204,7 @@
                         <p>{{ strings.totp_enabled }}</p>
 
                         <div class="smd-component_button-container">
-                            <button id="totp-setup" class="smd-component_button-large smd-color_mediumslateblue">{{ strings.enable_2fa }}</button>
+                            <button id="disable-totp" class="smd-component_button-large smd-color_mediumslateblue">{{ strings.disable_2fa }}</button>
                         </div>
                     {% else %}
                         <p>{{ strings.totp_disabled }}</p>
@@ -176,6 +225,12 @@
                                     document.getElementById('qr-code').innerHTML = `<img src="data:image/png;base64,${data.qr_code}" width="200px">`;
                                     document.getElementById('secret_base32').innerHTML = `<code>${data.secret}</code>`;
                                 });
+                            });
+                    </script>
+                    <script>
+                        document.getElementById('disable-totp').addEventListener('click', function() {
+                            document.getElementById('totp-dialog-disable').style.display = 'block';
+                            document.getElementById('background').classList.add('sid-layout_main-blur');
                             });
                     </script>
                 </div>
