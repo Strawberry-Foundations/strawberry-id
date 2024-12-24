@@ -8,14 +8,15 @@ pub struct StrawberryIdTotp {
 
 impl StrawberryIdTotp {
     pub fn setup(account_name: &str) -> Self {
-        let secret= Secret::default();
+        let base_token = Secret::generate_secret().to_string();
+        let secret = Secret::Raw(base_token.as_bytes().to_vec()).to_bytes().unwrap();
 
         let totp = TOTP::new(
             Algorithm::SHA1,
             6,
             1,
             30,
-            secret.clone().to_bytes().unwrap(),
+            secret,
             Some("Strawberry ID".to_string()),
             account_name.to_string()
         );
@@ -26,7 +27,7 @@ impl StrawberryIdTotp {
 
         Self {
             secret_base32,
-            secret: secret.to_string(),
+            secret: base_token.to_string(),
             qr_code
         }
     }
@@ -37,7 +38,7 @@ impl StrawberryIdTotp {
             6,
             1,
             30,
-            secret.as_bytes().to_vec(),
+            Secret::Raw(secret.as_bytes().to_vec()).to_bytes().unwrap(),
             Some("Strawberry ID".to_string()),
             "".to_string()
         );
