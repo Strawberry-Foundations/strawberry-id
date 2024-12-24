@@ -26,4 +26,21 @@ impl StrawberryIdTotp {
             qr_code
         }
     }
+
+    pub fn check(secret: &str, code: &str) -> bool {
+        let totp = TOTP::new(
+            Algorithm::SHA1,
+            6,
+            1,
+            30,
+            secret.as_bytes().to_vec(),
+            Some("Strawberry ID".to_string()),
+            "".to_string()
+        );
+
+        let totp = totp.unwrap();
+        let token = totp.generate_current().unwrap();
+        
+        token == *code
+    }
 }
