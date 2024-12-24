@@ -10,6 +10,7 @@ pub mod v2 {
     pub mod logout;
     pub mod oauth_dialog;
     pub mod account;
+    pub mod totp;
 
     pub mod api {
         pub mod callback;
