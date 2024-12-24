@@ -18,6 +18,20 @@
             {{ strings.close }}
         </button>
     </div>
+
+    <div id="totp-dialog" class="smd-component_card sid-layout_login-dialog" style="display: none;">
+        <h2>{{ strings.totp_required }}</h2>
+        <form action="/v2/{{ lang }}/login/totp?{{ full_params }}" method="post">
+            <div class="smd-component_textarea">
+                <label class="smd-component_textfield-hint-small">{{ strings.totp_code }}</label>
+                <input type="text" id="totp_code" name="totp_code" class="smd-component_textfield" required>
+                <label for="totp_code" class="smd-component_textfield-hint">{{ strings.totp_code }}</label>
+            </div>
+            <div class="sid-layout_login-main-submit">
+                <input id="totp_submit" class="smd-component_button-large smd-color_mediumslateblue" type="submit" value="{{ strings.submit }}">
+            </div>
+        </form>
+    </div>
     
     <div class="smd-layout_main" id="background">
         <div class="smd-component_card sid-layout_login smd-component_base-shadow">
@@ -101,6 +115,29 @@
                         }
                     </script>
                 {% endif %}
+
+                {% if meta.totp_required %}
+                    <script>
+                        var totpModal = document.getElementById("totp-dialog");
+
+                        window.onload = function () {
+                            totpModal.style.display = "block";
+                            document.getElementById('background').classList.add('sid-layout_main-blur');
+                            document.getElementById('footer').classList.add('sid-layout_main-blur');
+                        };
+
+                        function closeTotpModal() {
+                            totpModal.classList.add('sid-layout_login-dialog-slide-out');
+                            setTimeout(function() {
+                                totpModal.style.display = "none";
+                            }, 1000); 
+                            
+                            document.getElementById('background').classList.remove('sid-layout_main-blur');
+                            document.getElementById('footer').classList.remove('sid-layout_main-blur');
+                        }
+                    </script>
+                {% endif %}
+                
             </div>
         </div>
     </div>
