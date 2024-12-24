@@ -99,7 +99,8 @@ member: Mitglied
 security_settings: Sicherheitseinstellungen
 two_factor_auth: Zwei-Faktor-Authentifizierung
 enable_2fa: 2FA aktivieren
-setup_totp: TOTP einrichten
+setup_totp: 2FA einrichten
+totp_setup_success: 2FA wurde erfolgreich eingerichtet
 
 # Profile Settings
 profile_settings: Profileinstellungen

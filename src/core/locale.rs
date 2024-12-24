@@ -104,6 +104,7 @@ pub struct Messages {
     pub two_factor_auth: String,
     pub enable_2fa: String,
     pub setup_totp: String,
+    pub totp_setup_success: String,
 
     pub profile_settings: String,
     pub full_name: String,
