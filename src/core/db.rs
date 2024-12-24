@@ -70,6 +70,8 @@ impl Database {
             account_enabled: user_data.get("account_enabled"),
             cloud_engine_enabled: user_data.get("cloud_engine_enabled"),
             strawberry_one: user_data.get("strawberry_one"),
+            totp_enabled: user_data.get("totp_enabled"),
+            totp_secret: user_data.get("totp_secret"),
         }
     }
 }
