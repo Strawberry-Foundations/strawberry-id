@@ -11,6 +11,7 @@ use crate::utilities::name_parser;
 pub struct LoginMeta {
     /// Error & information
     pub error: bool,
+    pub totp: bool,
     pub info_message: String,
 
     /// Flags
@@ -25,6 +26,7 @@ pub struct LoginMeta {
 
     /// Vars
     pub code: u64,
+    pub totp_required: bool
 }
 
 #[derive(Default, Deserialize, Serialize, Clone)]
@@ -66,7 +68,9 @@ pub struct UserData {
     pub profile_picture_url: String,
     pub account_enabled: String,
     pub cloud_engine_enabled: String,
-    pub strawberry_one: String
+    pub strawberry_one: String,
+    pub totp_enabled: String,
+    pub totp_secret: String,
 }
 
 #[derive(FromForm)]
