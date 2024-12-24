@@ -74,4 +74,13 @@ impl Database {
             totp_secret: user_data.get("totp_secret"),
         }
     }
+    
+    pub async fn save_totp_secret(&self, username: String, totp_secret: String) -> Result<(), sqlx::Error> {
+        sqlx::query("UPDATE users SET totp_secret = ? WHERE username = ?")
+            .bind(totp_secret)
+            .bind(username)
+            .execute(&self.connection)
+            .await?;
+        Ok(())
+    }
 }
