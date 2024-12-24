@@ -19,7 +19,7 @@
         </button>
     </div>
 
-    <div id="totp-dialog" class="smd-component_card sid-layout_login-dialog" style="display: none;">
+    <div id="totp-dialog" class="smd-component_card sid-layout_login-dialog">
         <h2>{{ strings.totp_required }}</h2>
         <form action="/v2/{{ lang }}/login/totp?{{ full_params }}" method="post">
             <div class="smd-component_textarea">
