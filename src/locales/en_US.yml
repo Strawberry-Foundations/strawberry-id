@@ -22,6 +22,13 @@ create_account_short: Create an account
 developer_documentation: Developer documentation
 my_profile: My Profile
 
+
+# TOTP
+totp_required: Two-factor authentication required
+totp_code: Two-factor authentication code
+submit: Submit
+wrong_totp_code: The code you entered is incorrect. Please check your input.
+
 # Content Strings
 strawberry_id_title: One account - for all Strawberry Foundations products
 strawberry_id_subtitle: Whether Strawberry Tunneled, Cloud or Chat,

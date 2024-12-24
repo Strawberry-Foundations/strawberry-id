@@ -28,6 +28,12 @@ pub struct Messages {
     pub create_account_short: String,
     pub developer_documentation: String,
     pub my_profile: String,
+    
+    /// TOTP
+    pub totp_required: String,
+    pub totp_code: String,
+    pub submit: String,
+    pub wrong_totp_code: String,
 
     /// Content Strings
     pub strawberry_id_title: String,

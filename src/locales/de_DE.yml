@@ -23,6 +23,13 @@ create_account_short: Account erstellen
 developer_documentation: Entwicklerdokumentation
 my_profile: Mein Profil
 
+
+# TOTP
+totp_required: Zwei-Faktor-Authentifizierung erforderlich
+totp_code: Zwei-Faktor-Authentifizierungscode
+submit: Bestätigen
+wrong_totp_code: Der angegebene Code ist falsch. Überprüfe deine Eingabe.
+
 # Content Strings
 strawberry_id_title: Ein Account - für alle Produkte von Strawberry Foundations
 strawberry_id_subtitle: Egal ob Strawberry Tunneled, Cloud oder Chat,
