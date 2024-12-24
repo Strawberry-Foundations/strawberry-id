@@ -94,6 +94,20 @@ pub struct Messages {
 
     /// Account settings
     pub account_settings: String,
+    pub profile: String,
+    pub security: String,
+    pub account: String,
+    pub notifications: String,
+    pub member: String,
+
+    pub security_settings: String,
+    pub two_factor_auth: String,
+    pub enable_2fa: String,
+    pub setup_totp: String,
+
+    pub profile_settings: String,
+    pub full_name: String,
+    pub bio: String,
 
     /// General error messages
     pub cloud_engine_deactivated: String,

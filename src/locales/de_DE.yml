@@ -89,6 +89,22 @@ warning_code_show: Kopiere dir den Code und zeige diesen Code niemanden anderes.
 
 # Account settings
 account_settings: Accounteinstellungen
+profile: Profil
+security: Sicherheit
+account: Account
+notifications: Benachrichtigungen
+member: Mitglied
+
+# Security Settings
+security_settings: Sicherheitseinstellungen
+two_factor_auth: Zwei-Faktor-Authentifizierung
+enable_2fa: 2FA aktivieren
+setup_totp: TOTP einrichten
+
+# Profile Settings
+profile_settings: Profileinstellungen
+full_name: Name (Vor- und Nachname)
+bio: Über mich
 
 # General Error Messages
 cloud_engine_deactivated: Dieses Feature wurde von einem Administratoren für Sie deaktiviert.
