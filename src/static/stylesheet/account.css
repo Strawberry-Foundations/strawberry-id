@@ -1,0 +1,109 @@
+.sid-account_profile-header {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    margin-bottom: 30px;
+    margin-left: 65px;
+    margin-top: 16px;
+}
+
+.sid-account_profile-picture {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    padding: 2px;
+    background: var(--color-background-lighter);
+    position: relative;
+}
+
+.sid-account_profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sid-account_profile-info {
+    margin-left: 20px;
+}
+
+.sid-account_profile-info h2 {
+    margin: 0;
+    color: white;
+}
+
+.sid-account_profile-info p {
+    margin: 5px 0 0;
+    color: #888;
+}
+
+.sid-account_settings-container {
+    margin-left: 100px;
+    display: flex;
+}
+
+.sid-account_settings-nav {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.sid-account_settings-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sid-account_settings-nav-item {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: #1b1b1b;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 12px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.sid-account_settings-nav-item:hover {
+    background-color: #3e4245;
+}
+
+.sid-account_settings-nav-item.active {
+    background-color: #3e4245;
+    font-weight: 600;
+}
+
+.sid-account_settings-content {
+    flex-grow: 1;
+    position: relative;
+    margin-top: -150px;
+}
+
+.sid-account_settings-panel {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    min-height: 400px;
+    transition: visibility 0s linear 0.3s, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.sid-account_settings-panel.active {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0s, opacity 0.3s ease;
+    height: auto;
+    position: relative;
+}
+
+.sid-account-content-main {
+    color: white;
+    text-align: left;
+    margin-left: 200px;
+}

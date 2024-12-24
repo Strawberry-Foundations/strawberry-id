@@ -1,15 +1,120 @@
 {% extends "base/base" %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="/static/stylesheet/account.css">
+{% endblock stylesheet %}
+
 {% block nav %}
 {% include "base/nav" %}
 {% endblock nav %}
 
 {% block content %}
 <center>
-  <div class="smd-layout_main">
-    <h1><b>{{ strings.account_settings }}</b></h1>
-    <h4>@{{ user.username }}</h4>
-  </div>
+    <div class="smd-layout_main">
+        <div class="sid-account_profile-header">
+            <div class="sid-account_profile-picture">
+                <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
+            </div>
+            <div class="sid-account_profile-info">
+                <h2>{{ user.full_name }}</h2>
+                <p>@{{ user.username }}</p>
+
+                {% if user.strawberry_one == "true" %}
+                    <p>Strawberry One {{ strings.member }}</p>
+                {% else %}
+                    <p>{{ strings.member }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="sid-account_settings-container">
+            <nav class="sid-account_settings-nav">
+                <ul>
+                    <li><a href="#profile" id="profile-tab" class="sid-account_settings-nav-item active">{{ strings.profile }}</a></li>
+                    <li><a href="#account" id="account-tab" class="sid-account_settings-nav-item">{{ strings.account }}</a></li>
+                    <li><a href="#security" id="security-tab" class="sid-account_settings-nav-item">{{ strings.security }}</a></li>
+                    <li><a href="#notifications" id="notifications-tab" class="sid-account_settings-nav-item">{{ strings.notifications }}</a></li>
+                </ul>
+            </nav>
+            <div class="sid-account_settings-content">
+                <div id="profile" class="sid-account_settings-panel sid-account-content-main active">
+                    <h1>{{ strings.profile_settings }}</h1>
+                    <div class="smd-component_textarea">
+                        <label class="smd-component_textfield-hint-small">{{ strings.full_name }}</label>
+                        <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" class="smd-component_textfield" onblur="unfocus('full_name')" required>
+                        <label for="full_name" class="smd-component_textfield-hint">{{ strings.full_name }}</label>
+                    </div>
+                    <div class="smd-component_textarea">
+                        <label class="smd-component_textfield-hint-small">{{ strings.bio }}</label>
+                        <textarea id="bio" name="bio" class="smd-component_textfield" onblur="unfocus('bio')"></textarea>
+                        <label for="bio" class="smd-component_textfield-hint">{{ strings.bio }}</label>
+                    </div>
+                </div>
+                <div id="account" class="sid-account_settings-panel sid-account-content-main">
+                    <h1>{{ strings.account_settings }}</h1>
+                    <div class="smd-component_textarea">
+                        <label class="smd-component_textfield-hint-small">{{ strings.username }}</label>
+                        <input type="text" id="username" name="username" value="{{ user.username }}" class="smd-component_textfield" onblur="unfocus('username')" required>
+                        <label for="username" class="smd-component_textfield-hint">{{ strings.username }}</label>
+                    </div>
+                    <div class="smd-component_textarea">
+                        <label class="smd-component_textfield-hint-small">{{ strings.email }}</label>
+                        <input type="email" id="email" name="email" value="{{ user.email }}" class="smd-component_textfield" onblur="unfocus('email')" required>
+                        <label for="email" class="smd-component_textfield-hint">{{ strings.email }}</label>
+                    </div>
+                </div>
+
+                <div id="security" class="sid-account_settings-panel sid-account-content-main">
+                    <h1>{{ strings.security_settings }}</h1>
+                    <h2>{{ strings.two_factor_auth }}</h2>
+                    <div class="smd-component_button-container">
+                        <button id="totp-setup" class="smd-component_button-large smd-color_mediumslateblue">{{ strings.enable_2fa }}</button>
+                    </div>
+
+                    <div id="totp-dialog" class="smd-component_card sid-layout_login-dialog" style="display: none;">
+                        <h2>{{ strings.setup_totp }}</h2>
+                        <form action="/v2/{{ lang }}/account/totp/setup" method="post">
+                            <div class="smd-component_textarea">
+                                <label class="smd-component_textfield-hint-small">{{ strings.totp_code }}</label>
+                                <input type="text" id="totp_code" name="totp_code" class="smd-component_textfield" required>
+                                <label for="totp_code" class="smd-component_textfield-hint">{{ strings.totp_code }}</label>
+                            </div>
+                            <div class="sid-layout_login-main-submit">
+                                <input class="smd-component_button-large smd-color_mediumslateblue" type="submit" value="{{ strings.submit }}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="notifications" class="sid-account_settings-panel sid-account-content-main">
+                    <!-- Notifications settings content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.sid-account_settings-nav-item');
+            const panels = document.querySelectorAll('.sid-account_settings-panel');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = tab.getAttribute('href').substring(1);
+
+                    // Remove active class from all tabs and panels
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+
+                    // Add active class to clicked tab and corresponding panel
+                    tab.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        });
+    </script>
+
+    </div>
 </center>
 
 {% endblock content %}
