@@ -107,3 +107,7 @@
     text-align: left;
     margin-left: 200px;
 }
+
+.sid-account-content-main button {
+    font-family: 'Poppins', sans-serif;
+}

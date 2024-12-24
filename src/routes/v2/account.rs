@@ -1,13 +1,21 @@
+use rocket::form::Form;
 use rocket::http::CookieJar;
 use rocket::response::Redirect;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
-
+use rocket::response::content::{RawHtml, RawJson};
+use rocket::serde::json::json;
 use crate::core::locale::{Language, LANGUAGES};
 use crate::core::object::UserData;
 use crate::core::state::AppState;
 use crate::core::system_core::AnyResponder;
+use crate::core::totp::StrawberryIdTotp;
 use crate::global::DATABASE;
+
+#[derive(FromForm)]
+pub struct TotpForm {
+    pub totp_code: String,
+}
 
 #[get("/account")]
 pub async fn account_no_lang(lang: Option<Language>) -> Redirect {
@@ -46,5 +54,57 @@ pub async fn account(lang: &str, state: &State<AppState>, jar: &CookieJar<'_>) -
         lang: &lang,
         is_authenticated: is_authenticated,
         user: user,
+        action: "none",
+    }))
+}
+
+#[get("/<lang>/account/totp/qrcode")]
+pub async fn generate_qr_code(lang: &str, jar: &CookieJar<'_>) -> RawJson<String> {
+    let user = jar.get_private("_strawberryid.username").unwrap().value().to_string();
+    let totp = StrawberryIdTotp::setup(&user);
+
+    DATABASE.save_totp_secret(user.clone(), totp.secret).await.unwrap();
+
+    let json = json!({
+        "qr_code": totp.qr_code,
+        "secret": totp.secret_base32,
+    });
+    let json_string = serde_json::to_string_pretty(&json).unwrap();
+
+    RawJson(json_string)
+}
+
+#[post("/<lang>/account", data = "<totp_form>")]
+pub async fn setup_totp(lang: &str, totp_form: Form<TotpForm>, state: &State<AppState>, jar: &CookieJar<'_>) -> AnyResponder {
+    let totp_code = &totp_form.totp_code;
+    println!("TOTP Code: {}", totp_code);
+
+    if !LANGUAGES.contains(&lang) {
+        return AnyResponder::Template(Template::render("404", context! {
+            uri: format!("/v2/{lang}/login")
+        }));
+    };
+
+    let strings = state.messages.get(lang).cloned().unwrap();
+    let is_authenticated: bool;
+
+    let user = match jar.get_private("_strawberryid.username") {
+        Some(res) => {
+            is_authenticated = true;
+            DATABASE.get_user_data(res.value().to_string()).await
+        },
+        None => {
+            is_authenticated = false;
+            UserData::default()
+        }
+    };
+
+    AnyResponder::Template(Template::render("account", context! {
+        title: &strings.account_settings,
+        strings: &strings,
+        lang: &lang,
+        is_authenticated: is_authenticated,
+        user: user,
+        action: "setup_totp_success",
     }))
 }
