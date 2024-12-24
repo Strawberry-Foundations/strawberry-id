@@ -77,7 +77,6 @@ pub async fn generate_qr_code(lang: &str, jar: &CookieJar<'_>) -> RawJson<String
 #[post("/<lang>/account", data = "<totp_form>")]
 pub async fn setup_totp(lang: &str, totp_form: Form<TotpForm>, state: &State<AppState>, jar: &CookieJar<'_>) -> AnyResponder {
     let totp_code = &totp_form.totp_code;
-    println!("TOTP Code: {}", totp_code);
 
     if !LANGUAGES.contains(&lang) {
         return AnyResponder::Template(Template::render("404", context! {
@@ -98,6 +97,20 @@ pub async fn setup_totp(lang: &str, totp_form: Form<TotpForm>, state: &State<App
             UserData::default()
         }
     };
+
+    if !StrawberryIdTotp::check(&user.totp_secret.clone(), totp_code) {
+        DATABASE.set_totp(user.username.clone(), "false".to_string()).await.unwrap();
+        return AnyResponder::Template(Template::render("account", context! {
+            title: &strings.account_settings,
+            strings: &strings,
+            lang: &lang,
+            is_authenticated: is_authenticated,
+            user: user,
+            action: "setup_totp_failed",
+        }))
+    }
+
+    DATABASE.set_totp(user.username.clone(), "true".to_string()).await.unwrap();
 
     AnyResponder::Template(Template::render("account", context! {
         title: &strings.account_settings,

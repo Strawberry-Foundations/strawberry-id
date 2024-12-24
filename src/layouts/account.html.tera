@@ -8,7 +8,7 @@
 {% block nav %}
 {% include "base/nav" %}
 {% endblock nav %}
-
+ 
 {% block content %}
 <center>
     <div id="totp-dialog" class="smd-component_card sid-layout_login-dialog smd-component_base-shadow" style="margin-top: 200px;">
@@ -39,6 +39,15 @@
         </button>
     </div>
 
+    <div id="totp-dialog-failed" class="smd-component_card sid-layout_login-dialog smd-component_base-shadow">
+        <h2>{{ strings.setup_totp }}</h2>
+        <p>{{ strings.totp_setup_failed }}</p>
+
+        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue">
+            {{ strings.close }}
+        </button>
+    </div>
+
     {% if action == "setup_totp_success" %}
         <script>
             var modal = document.getElementById("totp-dialog-success");
@@ -57,6 +66,26 @@
                     modal.style.display = "none";
                 }, 1000); 
                 
+                
+                document.getElementById('background').classList.remove('sid-layout_main-blur');
+                document.getElementById('footer').classList.remove('sid-layout_main-blur');
+            }
+        </script>
+    {% elif action == "setup_totp_failed" %}
+        <script>
+            var modal = document.getElementById("totp-dialog-failed");
+
+            window.onload = function () {
+                modal.style.display = "block";
+                document.getElementById('background').classList.add('sid-layout_main-blur');
+                document.getElementById('footer').classList.add('sid-layout_main-blur');
+            };
+
+            function closeModal() {
+                modal.classList.add('sid-layout_login-dialog-slide-out');
+                setTimeout(function() {
+                    modal.style.display = "none";
+                }, 1000); 
                 
                 document.getElementById('background').classList.remove('sid-layout_main-blur');
                 document.getElementById('footer').classList.remove('sid-layout_main-blur');
@@ -121,9 +150,20 @@
                 <div id="security" class="sid-account_settings-panel sid-account-content-main">
                     <h1>{{ strings.security_settings }}</h1>
                     <h2>{{ strings.two_factor_auth }}</h2>
-                    <div class="smd-component_button-container">
-                        <button id="totp-setup" class="smd-component_button-large smd-color_mediumslateblue">{{ strings.enable_2fa }}</button>
-                    </div>
+
+                    {% if user.totp_enabled == "true" %}
+                        <p>{{ strings.totp_enabled }}</p>
+
+                        <div class="smd-component_button-container">
+                            <button id="totp-setup" class="smd-component_button-large smd-color_mediumslateblue">{{ strings.enable_2fa }}</button>
+                        </div>
+                    {% else %}
+                        <p>{{ strings.totp_disabled }}</p>
+
+                        <div class="smd-component_button-container">
+                            <button id="totp-setup" class="smd-component_button-large smd-color_mediumslateblue">{{ strings.enable_2fa }}</button>
+                        </div>
+                    {% endif %}
 
                     <script>
                         document.getElementById('totp-setup').addEventListener('click', function() {
@@ -133,8 +173,8 @@
                             fetch(`/v2/{{ lang }}/account/totp/qrcode`)
                                 .then(response => response.json())
                                 .then(data => {
-                                    document.getElementById('qr-code').innerHTML = `<img src="data:image/png;base64,${data.qr_code}">`;
-                                    document.getElementById('secret_base32').innerHTML = `<p>${data.secret}</p>`;
+                                    document.getElementById('qr-code').innerHTML = `<img src="data:image/png;base64,${data.qr_code}" width="200px">`;
+                                    document.getElementById('secret_base32').innerHTML = `<code>${data.secret}</code>`;
                                 });
                             });
                     </script>
