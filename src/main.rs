@@ -25,6 +25,7 @@ use crate::routes::v2::api::{
 use crate::routes::v1::index::{v1_index, v1_index_no_lang};
 use crate::routes::root::{root, root_no_lang};
 use crate::routes::v2::account::{generate_qr_code, setup_totp};
+use crate::routes::v2::totp::disable_totp;
 use crate::routes::web_static::static_files;
 
 pub mod utilities;
@@ -70,7 +71,8 @@ async fn main() {
 
             login_totp,
             generate_qr_code,
-            setup_totp
+            setup_totp,
+            disable_totp
         ])
         .mount("/v2/api", routes![
             api_callback,
