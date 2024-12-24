@@ -100,6 +100,9 @@ two_factor_auth: Two-factor authentication
 enable_2fa: Enable 2FA
 setup_totp: Set up 2FA
 totp_setup_success: 2FA has been successfully set up
+totp_enabled: 2FA is enabled
+totp_disabled: 2FA is disabled
+totp_setup_failed: 2FA could not be set up. The code entered is incorrect. Please try again.
 
 # Profile Settings
 profile_settings: Profile settings

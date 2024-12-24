@@ -105,6 +105,9 @@ pub struct Messages {
     pub enable_2fa: String,
     pub setup_totp: String,
     pub totp_setup_success: String,
+    pub totp_enabled: String,
+    pub totp_disabled: String,
+    pub totp_setup_failed: String,
 
     pub profile_settings: String,
     pub full_name: String,
