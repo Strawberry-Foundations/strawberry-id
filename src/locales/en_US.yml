@@ -98,11 +98,15 @@ member: Member
 security_settings: Security settings
 two_factor_auth: Two-factor authentication
 enable_2fa: Enable 2FA
+disable_2fa: Disable 2FA
 setup_totp: Set up 2FA
 totp_setup_success: 2FA has been successfully set up
 totp_enabled: 2FA is enabled
 totp_disabled: 2FA is disabled
 totp_setup_failed: 2FA could not be set up. The code entered is incorrect. Please try again.
+login_required: Login required
+totp_disable_failed: 2FA could not be disabled. The entered code or password is incorrect. Please try again.
+
 
 # Profile Settings
 profile_settings: Profile settings
