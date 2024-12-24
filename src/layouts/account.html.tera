@@ -2,6 +2,7 @@
 
 {% block stylesheet %}
 <link rel="stylesheet" href="/static/stylesheet/account.css">
+<link rel="stylesheet" href="/static/stylesheet/login.css">
 {% endblock stylesheet %}
 
 {% block nav %}
@@ -10,7 +11,60 @@
 
 {% block content %}
 <center>
-    <div class="smd-layout_main">
+    <div id="totp-dialog" class="smd-component_card sid-layout_login-dialog smd-component_base-shadow" style="margin-top: 200px;">
+        <h2>{{ strings.setup_totp }}</h2>
+
+        <div id="qr-code"></div>
+        <h4>Base64 Hash</h4>
+        <div id="secret_base32" style="margin-top: -10px;"></div>
+
+        <form action="/v2/{{ lang }}/account" method="post">
+            <div class="smd-component_textarea">
+                <label class="smd-component_textfield-hint-small">{{ strings.totp_code }}</label>
+                <input type="text" id="totp_code" name="totp_code" class="smd-component_textfield" required>
+                <label for="totp_code" class="smd-component_textfield-hint">{{ strings.totp_code }}</label>
+            </div>
+            <div class="sid-layout_login-main-submit">
+                <input class="smd-component_button-large smd-color_mediumslateblue" type="submit" value="{{ strings.submit }}">
+            </div>
+        </form>
+    </div>
+
+    <div id="totp-dialog-success" class="smd-component_card sid-layout_login-dialog smd-component_base-shadow">
+        <h2>{{ strings.setup_totp }}</h2>
+        <p>{{ strings.totp_setup_success }}</p>
+
+        <button type="button" onclick="closeModal()" class="smd-component_button-small smd-color_mediumslateblue">
+            {{ strings.close }}
+        </button>
+    </div>
+
+    {% if action == "setup_totp_success" %}
+        <script>
+            var modal = document.getElementById("totp-dialog-success");
+
+            var span = document.getElementsByClassName("close")[0];
+
+            window.onload = function () {
+                modal.style.display = "block";
+                document.getElementById('background').classList.add('sid-layout_main-blur');
+                document.getElementById('footer').classList.add('sid-layout_main-blur');
+            };
+
+            function closeModal() {
+                modal.classList.add('sid-layout_login-dialog-slide-out');
+                setTimeout(function() {
+                    modal.style.display = "none";
+                }, 1000); 
+                
+                
+                document.getElementById('background').classList.remove('sid-layout_main-blur');
+                document.getElementById('footer').classList.remove('sid-layout_main-blur');
+            }
+        </script>
+    {% endif %}
+
+    <div class="smd-layout_main" id="background">
         <div class="sid-account_profile-header">
             <div class="sid-account_profile-picture">
                 <img src="{{ user.profile_picture_url }}" alt="Profile Picture">
@@ -71,19 +125,19 @@
                         <button id="totp-setup" class="smd-component_button-large smd-color_mediumslateblue">{{ strings.enable_2fa }}</button>
                     </div>
 
-                    <div id="totp-dialog" class="smd-component_card sid-layout_login-dialog" style="display: none;">
-                        <h2>{{ strings.setup_totp }}</h2>
-                        <form action="/v2/{{ lang }}/account/totp/setup" method="post">
-                            <div class="smd-component_textarea">
-                                <label class="smd-component_textfield-hint-small">{{ strings.totp_code }}</label>
-                                <input type="text" id="totp_code" name="totp_code" class="smd-component_textfield" required>
-                                <label for="totp_code" class="smd-component_textfield-hint">{{ strings.totp_code }}</label>
-                            </div>
-                            <div class="sid-layout_login-main-submit">
-                                <input class="smd-component_button-large smd-color_mediumslateblue" type="submit" value="{{ strings.submit }}">
-                            </div>
-                        </form>
-                    </div>
+                    <script>
+                        document.getElementById('totp-setup').addEventListener('click', function() {
+                            document.getElementById('totp-dialog').style.display = 'block';
+                            document.getElementById('background').classList.add('sid-layout_main-blur');
+
+                            fetch(`/v2/{{ lang }}/account/totp/qrcode`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    document.getElementById('qr-code').innerHTML = `<img src="data:image/png;base64,${data.qr_code}">`;
+                                    document.getElementById('secret_base32').innerHTML = `<p>${data.secret}</p>`;
+                                });
+                            });
+                    </script>
                 </div>
                 <div id="notifications" class="sid-account_settings-panel sid-account-content-main">
                     <!-- Notifications settings content -->

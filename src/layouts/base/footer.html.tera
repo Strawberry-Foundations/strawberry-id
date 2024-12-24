@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/static/stylesheet/footer.css">
 {% endblock stylesheet %}
 
-<footer class="sid-layout_footer">
+<footer class="sid-layout_footer" id="footer">
     <center>
         <hr>
         <h3>© Strawberry Foundations 2021 - 2025</h3>
