@@ -83,4 +83,15 @@ impl Database {
             .await?;
         Ok(())
     }
+
+    pub async fn set_totp(&self, username: String, state: String) -> Result<(), sqlx::Error> {
+        sqlx::query("UPDATE users SET totp_enabled = ? WHERE username = ?")
+            .bind(state)
+            .bind(username)
+            .execute(&self.connection)
+            .await?;
+        Ok(())
+    }
+
+
 }
