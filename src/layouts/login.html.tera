@@ -86,8 +86,8 @@
                     </div>
 
                     <div class="sid-layout_login-main-submit">
-                        <input onclick="window.location.href = '/v2/{{ lang }}/register'" id="register" class="smd-component_button-large smd-color_darkslateblue" type="button" value="{{ strings.new_account }}">
-                        <input id="login_submit" class="smd-component_button-large smd-color_mediumslateblue" type="submit" value="{{ strings.login }}">
+                        <input onclick="window.location.href = '/v2/{{ lang }}/register'" id="register" class="smd-component_button-large smd-color_branding-primary" type="button" value="{{ strings.new_account }}">
+                        <input id="login_submit" class="smd-component_button-large smd-color_branding-secondary" type="submit" value="{{ strings.login }}">
                     </div>
                 </form>
 
