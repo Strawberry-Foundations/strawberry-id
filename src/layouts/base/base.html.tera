@@ -33,13 +33,13 @@
 
     <link rel="icon" href="/static/assets/svg/sid_lowercase.svg" />
 
-    <link rel="stylesheet" href="https://dl.strawberryfoundations.org/w3/static/smv3/dist/smdlv3.min.css">
+    <link rel="stylesheet" href="https://dl.strawberryfoundations.org/w3/static/adlsv3/dist/adlsv3.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     {% block stylesheet %}{% endblock stylesheet %}
 
-    <script src="https://dl.strawberryfoundations.org/w3/static/smv3/dist/smdlv3.min.js"></script>
+    <script src="https://dl.strawberryfoundations.org/w3/static/adlsv3/dist/adlsv3.min.js"></script>
 </head>
 
 <body class="smd-layout_body">
