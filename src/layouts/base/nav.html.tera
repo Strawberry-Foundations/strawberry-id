@@ -13,8 +13,10 @@
     </nav>
 
     <div class="smd-layout_navbar-right">
-        {% if not is_authenticated %}
-            <a href="/v2/{{ lang }}/login">{{ strings.login }}</a>
+        {% if not is_authenticated%}
+            {% if show_login %}
+                <a href="/v2/{{ lang }}/login">{{ strings.login }}</a>
+            {% endif %}
         {% else %}
             <div class="smd-component_dropdown">
                 <button class="smd-component_dropdown-dropbtn" onclick="toggleDropdown()">
@@ -88,5 +90,4 @@
             }
         </script>
     </div>
-    <hr>
 </header>

@@ -1,6 +1,16 @@
 .sid-layout_login {
     height: auto !important;
     width: 790px !important;
+    overflow: hidden;
+    transition: min-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    min-height: 400px;
+    position: relative;
+    will-change: min-height;
+}
+
+.sid-layout_login-header {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
 }
 
 .sid-layout_login-header img {
@@ -8,10 +18,14 @@
     left: -330px;
     width: 100px;
     display: inline-block;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
 }
 
 .sid-layout_login-header h2 {
     margin-top: -70px;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
 }
 
 .sid-layout_login-security {
@@ -28,12 +42,14 @@
 
 .sid-layout_login-main {
     margin-top: 40px;
-    left: 20%;
-    right: 20%
+    position: relative;
+    height: auto;
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
 }
 
 .sid-layout_login-main-submit {
-    margin-top: 36px;
+    margin-top: 56px;
 }
 
 .sid-layout_login-main-submit input {
@@ -42,7 +58,7 @@
 }
 
 .sid-layout_login-dialog {
-    margin: 0; /* Entferne den oberen Rand */
+    margin: 0;
     height: auto !important;
     width: 500px !important;
     animation: slide-in-login 1s;
@@ -95,4 +111,173 @@
 
 .sid-layout_login-dialog-slide-out {
     animation: slide-out-top 1s;
+}
+
+.login-step {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    transition: none;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.login-step.active {
+    position: relative;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.slide-out-left {
+    animation: slideOutLeft 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slide-out-right {
+    animation: slideOutRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes slideOutRight {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes slideOutLeft {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+.sid-layout_login.step-username {
+    min-height: 400px;
+}
+
+.sid-layout_login.step-password {
+    min-height: 500px;
+}
+
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(var(--color-branding-primary-rgb), 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+}
+
+.user-info.visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.user-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.user-details {
+    text-align: center;
+}
+
+.user-details h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--color-text-primary);
+}
+
+.user-details p {
+    margin: 5px 0 0 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+}
+
+
+
+#username-login-error,
+#password-login-error {
+    color: red;
+    font-size: 14px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 5px;
+    min-height: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: none;
+}
+
+#username-login-error.show,
+#password-login-error.show {
+    opacity: 1;
+    visibility: visible;
+    animation: slideDownFromTop 0.2s ease-in forwards;
+}
+
+@keyframes slideDownFromTop {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }

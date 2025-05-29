@@ -68,9 +68,9 @@ have_account_2: Melde dich an!
 login_error: Anmeldefehler
 login_success: Anmeldung erfolgreich
 wrong_username_or_password: Dein Nutzername oder dein Passwort ist nicht richtig. Überprüfe nochmals deine Eingaben!
-wrong_username: Diese Strawberry ID existiert nicht! Überprüfe deine Eingabe!
+wrong_username: Diese Strawberry ID wurde nicht gefunden!
 wrong_password: Dein Passwort ist inkorrekt. Überprüfe nochmals deine Eingabe!
-account_disabled: Dein Account wurde gesperrt. Kontaktiere den Support, falls du denkst, das dein Account zu unrecht gesperrt wurde.
+account_disabled: Dein Account wurde gesperrt.
 
 redirect_after_login: Nach dem Anmelden wirst du automatisch nach %s weitergeleitet
 trusted_domain: Diese Domain wurde von uns verifiziert und ist sicher.
@@ -128,3 +128,25 @@ only_permit_you_know: Überprüfe, ob diese Anfrage wirklich von der App stammt 
 login_not_possible: Anmeldung nicht möglich
 login_not_possible_invalid_code: Der angegebene Code ist entweder falsch oder existiert nicht.
 login_success_subtitle: Du wurdest bei %s angemeldet. Du kannst diese Seite nun schließen
+
+
+
+
+
+
+
+
+
+continue: Weiter
+welcome_back: Willkommen zurück!
+user_not_found: Nutzer nicht gefunden
+connection_error: Verbindungsfehler
+
+
+
+
+
+
+
+
+

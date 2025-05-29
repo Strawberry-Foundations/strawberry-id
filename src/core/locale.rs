@@ -131,6 +131,11 @@ pub struct Messages {
     pub login_not_possible: String,
     pub login_not_possible_invalid_code: String,
     pub login_success_subtitle: String,
+
+    pub r#continue: String,
+    pub welcome_back: String,
+    pub user_not_found: String,
+    pub connection_error: String,
 }
 
 #[derive(Debug)]

@@ -2,6 +2,7 @@
 
 use rocket::figment::Figment;
 use rocket_dyn_templates::Template;
+use routes::v2::login::check_user_post;
 
 use crate::core::state::AppState;
 use crate::global::CONFIG;
@@ -54,6 +55,7 @@ async fn main() {
             login,
             login_no_lang,
             login_post,
+            check_user_post,
 
             login_oauth,
             login_oauth_no_lang,
@@ -72,7 +74,7 @@ async fn main() {
             login_totp,
             generate_qr_code,
             setup_totp,
-            disable_totp
+            disable_totp,
         ])
         .mount("/v2/api", routes![
             api_callback,

@@ -14,7 +14,8 @@
     <div id="error-dialog" class="smd-component_card sid-layout_login-dialog">
         <h2>{{ strings.login_error }}</h2>
         <p>{{ meta.info_message }}</p>
-        <button type="button" onclick="closeModal('{{ full_params }}')" class="smd-component_button-small smd-color_mediumslateblue">
+        <button type="button" onclick="closeModal('{{ full_params }}')"
+            class="smd-component_button-small smd-color_mediumslateblue">
             {{ strings.close }}
         </button>
     </div>
@@ -28,11 +29,12 @@
                 <label for="totp_code" class="smd-component_textfield-hint">{{ strings.totp_code }}</label>
             </div>
             <div class="sid-layout_login-main-submit">
-                <input id="totp_submit" class="smd-component_button-large smd-color_mediumslateblue" type="submit" value="{{ strings.submit }}">
+                <input id="totp_submit" class="smd-component_button-large smd-color_mediumslateblue" type="submit"
+                    value="{{ strings.submit }}">
             </div>
         </form>
     </div>
-    
+
     <div class="smd-layout_main" id="background">
         <div class="smd-component_card sid-layout_login smd-component_base-shadow">
             <div class="sid-layout_login-header">
@@ -43,101 +45,313 @@
 
             <div class="sid-layout_login-security">
                 {% if meta.redirect_after_login %}
-                    {% if meta.trusted_web %}
-                        <span id="verified_icon" class="material-symbols-outlined sid_verified">verified</span>
-                        <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_domain }}</div>
-                        <p class="sid_verified"><b>{{ redirect_after_login }}</b></p>
-                    {% else %}
-                        <span id="unverified_icon" class="material-symbols-outlined sid_unverified">priority_high</span>
-                        <div class="mdl-tooltip" data-mdl-for="unverified_icon">{{ strings.not_trusted_domain }}</div>
-                        <p class="sid_unverified"><b>{{ redirect_after_login }}</b></p>
-                    {% endif %}
-                {% elif meta.service_login or params.oauth %}
-                    {% if meta.trusted_service %}
-                        <span id="verified_icon" class="material-symbols-outlined sid_verified">verified</span>
-                        <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
-                        <p class="sid_verified"><b>{{ service_after_login }}</b></p>
-                    {% else %}
-                        <span id="unverified_icon" class="material-symbols-outlined sid_unverified">priority_high</span>
-                        <div class="mdl-tooltip" data-mdl-for="unverified_icon">{{ strings.not_trusted_service }}</div>
-                        <p class="sid_unverified"><b>{{ service_after_login }}</b></p>
-                    {% endif %}
+                {% if meta.trusted_web %}
+                <span id="verified_icon" class="material-symbols-outlined sid_verified">verified</span>
+                <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_domain }}</div>
+                <p class="sid_verified"><b>{{ redirect_after_login }}</b></p>
                 {% else %}
-                    <span id="verified_icon" class="material-symbols-outlined sid_verified">verified</span>
-                    <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
-                    <p class="sid_verified"><b>{{ strings.account_settings_after_login }}</b></p>
+                <span id="unverified_icon" class="material-symbols-outlined sid_unverified">priority_high</span>
+                <div class="mdl-tooltip" data-mdl-for="unverified_icon">{{ strings.not_trusted_domain }}</div>
+                <p class="sid_unverified"><b>{{ redirect_after_login }}</b></p>
+                {% endif %}
+                {% elif meta.service_login or params.oauth %}
+                {% if meta.trusted_service %}
+                <span id="verified_icon" class="material-symbols-outlined sid_verified">verified</span>
+                <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
+                <p class="sid_verified"><b>{{ service_after_login }}</b></p>
+                {% else %}
+                <span id="unverified_icon" class="material-symbols-outlined sid_unverified">priority_high</span>
+                <div class="mdl-tooltip" data-mdl-for="unverified_icon">{{ strings.not_trusted_service }}</div>
+                <p class="sid_unverified"><b>{{ service_after_login }}</b></p>
+                {% endif %}
+                {% else %}
+                <span id="verified_icon" class="material-symbols-outlined sid_verified">verified</span>
+                <div class="mdl-tooltip" data-mdl-for="verified_icon">{{ strings.trusted_service }}</div>
+                <p class="sid_verified"><b>{{ strings.account_settings_after_login }}</b></p>
                 {% endif %}
             </div>
 
             <div class="sid-layout_login-main">
-                <form action="/v2/{{ lang }}/login?{{ full_params }}" method="post">
-                    <div class="smd-component_textarea">
-                        <label class="smd-component_textfield-hint-small">{{ strings.email_username }}</label>
-            
-                        <input type="text" id="username" name="username" class="smd-component_textfield" onblur="unfocus('username')" required>
-                        <label for="username" class="smd-component_textfield-hint">{{ strings.email_username }}</label>
+                <form id="login-form" onsubmit="return false;">
+                    <div id="step-username" class="login-step active">
+                        <div class="smd-component_textarea">
+                            <label class="smd-component_textfield-hint-small">{{ strings.email_username }}</label>
+                    
+                            <input type="text" id="username" name="username" class="smd-component_textfield" onblur="unfocus('username')"
+                                required>
+                            <label for="username" class="smd-component_textfield-hint">
+                                {{ strings.email_username }}
+                            </label>
+                            <p id="username-login-error"></p>
+                        </div>
+                    
+                        <div class="sid-layout_login-main-submit">
+                            <input onclick="window.location.href = '/v2/{{ lang }}/register'" id="register"
+                                class="smd-component_button-large smd-color_branding-primary" type="button"
+                                value="{{ strings.new_account }}">
+                            <button onclick="checkUser(this)" id="continue_btn" class="smd-component_button-large smd-color_branding-secondary" type="button">
+                                {{strings.login }}
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="smd-component_textarea">
-                        <label class="smd-component_textfield-hint-small">{{ strings.password }}</label>
-            
-                        <input type="password" id="password" name="password" class="smd-component_textfield" onblur="unfocus('username')" required>
-                        <label for="password" class="smd-component_textfield-hint">{{ strings.password }}</label>
-                    </div>
+                    <div id="step-password" class="login-step hidden">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <img id="user-avatar" src="/static/assets/avatar/default.png" alt="User Avatar">
+                            </div>
+                            <div class="user-details">
+                                <h3 id="user-display-name">{{ strings.welcome_back }}</h3>
+                                <p id="user-email-display"></p>
+                            </div>
+                        </div>
 
-                    <div class="sid-layout_login-main-submit">
-                        <input onclick="window.location.href = '/v2/{{ lang }}/register'" id="register" class="smd-component_button-large smd-color_branding-primary" type="button" value="{{ strings.new_account }}">
-                        <input id="login_submit" class="smd-component_button-large smd-color_branding-secondary" type="submit" value="{{ strings.login }}">
+                        <div class="smd-component_textarea">
+                            <label class="smd-component_textfield-hint-small">{{ strings.password }}</label>
+
+                            <input type="password" id="password" name="password" class="smd-component_textfield"
+                                onblur="unfocus('password')" required>
+                            <label for="password" class="smd-component_textfield-hint">{{ strings.password }}</label>
+                            <p id="password-login-error"></p>
+                        </div>
+
+                        <div class="sid-layout_login-main-submit">
+                            <button onclick="goBack()" id="back_btn"
+                                class="smd-component_button-large smd-component_button--outline smd-color_branding-secondary"
+                                type="button">{{ strings.back }}</button>
+                            <button onclick="handleLogin(this)" id="login_submit"
+                                class="smd-component_button-large smd-color_branding-secondary" type="button">{{
+                                strings.login }}</button>
+                        </div>
                     </div>
                 </form>
 
-                {% if meta.error %}
-                    <script>
-                        var modal = document.getElementById("error-dialog");
+                <script>
+                    async function checkUser(button) {
+                        const username = document.getElementById('username');
 
-                        var span = document.getElementsByClassName("close")[0];
-
-                        window.onload = function () {
-                            modal.style.display = "block";
-                            document.getElementById('background').classList.add('sid-layout_main-blur');
-                            document.getElementById('footer').classList.add('sid-layout_main-blur');
-                        };
-
-                        function closeModal(full_params) {
-                            modal.classList.add('sid-layout_login-dialog-slide-out');
-                            setTimeout(function() {
-                                modal.style.display = "none";
-                            }, 1000); 
-                            
-                            
-                            document.getElementById('background').classList.remove('sid-layout_main-blur');
-                            document.getElementById('footer').classList.remove('sid-layout_main-blur');
+                        if (!username.value.trim()) {
+                            username.focus();
+                            return;
                         }
-                    </script>
-                {% endif %}
 
-                {% if meta.totp_required %}
-                    <script>
-                        var totpModal = document.getElementById("totp-dialog");
+                        const errorElement = document.getElementById('username-login-error');
+                        errorElement.textContent = '';
+                        errorElement.classList.remove('show');
 
-                        window.onload = function () {
-                            totpModal.style.display = "block";
-                            document.getElementById('background').classList.add('sid-layout_main-blur');
-                            document.getElementById('footer').classList.add('sid-layout_main-blur');
-                        };
+                        toggleLoading(button);
 
-                        function closeTotpModal() {
-                            totpModal.classList.add('sid-layout_login-dialog-slide-out');
-                            setTimeout(function() {
-                                totpModal.style.display = "none";
-                            }, 1000); 
-                            
-                            document.getElementById('background').classList.remove('sid-layout_main-blur');
-                            document.getElementById('footer').classList.remove('sid-layout_main-blur');
+                        try {
+                            const response = await fetch('/v2/{{ lang }}/check-user', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'Accept': 'application/json'
+                                },
+                                body: new URLSearchParams({
+                                    username: username.value
+                                })
+                            });
+
+                            const result = await response.json();
+
+                            if (response.ok && result.user_exists) {
+                                stopLoading(button);
+                                showPasswordStep(result.user);
+                            } else {
+                                stopLoading(button);
+                                const errorElement = document.getElementById('username-login-error');
+                                errorElement.textContent = result.error || '{{ strings.user_not_found }}';
+                                errorElement.classList.add('show');
+                            }
+
+                        } catch (error) {
+                            console.error('Check user error:', error);
+                            stopLoading(button);
+                            showError('{{ strings.connection_error }}');
                         }
-                    </script>
-                {% endif %}
-                
+                    }
+
+                    async function handleLogin(button) {
+                        const username = document.getElementById('username').value;
+                        const password = document.getElementById('password');
+
+                        if (!password.value.trim()) {
+                            password.focus();
+                            return;
+                        }
+
+                        const errorElement = document.getElementById('password-login-error');
+                        errorElement.textContent = '';
+                        errorElement.classList.remove('show');
+
+                        toggleLoading(button);
+
+                        try {
+                            const urlParams = new URLSearchParams(window.location.search);
+                            const currentParams = urlParams.toString();
+                            
+                            const response = await fetch(`/v2/{{ lang }}/login${currentParams ? '?' + currentParams : ''}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'Accept': 'application/json'
+                                },
+                                body: new URLSearchParams({
+                                    username: username,
+                                    password: password.value
+                                })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`HTTP ${response.status}`);
+                            }
+
+                            const result = await response.json();
+
+                            if (result.success) {
+                                errorElement.textContent = '';
+                                errorElement.classList.remove('show');
+                                if (result.redirect_url) {
+                                    window.location.href = result.redirect_url;
+                                } else {
+                                    window.location.href = '/v2/{{ lang }}/account/settings';
+                                }
+                            } else if (result.totp_required) {
+                                stopLoading(button);
+                                showTotpModal();
+                            } else {
+                                stopLoading(button);
+                                const errorElement = document.getElementById('password-login-error');
+                                errorElement.textContent = result.error || '{{ strings.login_error }}';
+                                errorElement.classList.add('show');
+                            }
+
+                        } catch (error) {
+                            console.error('Login error:', error);
+                            stopLoading(button);
+                            const errorElement = document.getElementById('password-login-error');
+                            errorElement.textContent = '{{ strings.connection_error }}';
+                            errorElement.classList.add('show');
+                        }
+                    }
+
+                    function showPasswordStep(user) {
+                        const card = document.querySelector('.sid-layout_login');
+                        const usernameStep = document.getElementById('step-username');
+                        const passwordStep = document.getElementById('step-password');
+                        
+                        card.classList.remove('step-username');
+                        card.classList.add('step-password');
+                        
+                        if (user.avatar) {
+                            document.getElementById('user-avatar').src = user.avatar;
+                        }
+                        if (user.display_name) {
+                            document.getElementById('user-display-name').textContent = `{{ strings.welcome_back }}, ${user.display_name}`;
+                        }
+                        document.getElementById('user-email-display').textContent = user.email || document.getElementById('username').value;
+
+                        usernameStep.classList.remove('active');
+                        usernameStep.classList.add('slide-out-left');
+                        
+                        setTimeout(() => {
+                            usernameStep.style.display = 'none';
+                            usernameStep.classList.remove('slide-out-left');
+                            
+                            passwordStep.style.display = 'block';
+                            passwordStep.classList.remove('hidden');
+                            passwordStep.classList.add('active', 'slide-in-right');
+                            
+                            setTimeout(() => {
+                                document.querySelector('.user-info').classList.add('visible');
+                                document.getElementById('password').focus();
+                            }, 200);
+                        }, 400);
+                    }
+
+                    function goBack() {
+                        const card = document.querySelector('.sid-layout_login');
+                        const usernameStep = document.getElementById('step-username');
+                        const passwordStep = document.getElementById('step-password');
+                        
+                        card.classList.remove('step-password');
+                        card.classList.add('step-username');
+                        
+                        document.querySelector('.user-info').classList.remove('visible');
+                        
+                        passwordStep.classList.remove('slide-in-right', 'active');
+                        passwordStep.classList.add('slide-out-right');
+
+                        const errorElement = document.getElementById('password-login-error');
+                        errorElement.textContent = '';
+                        errorElement.classList.remove('show');
+                        document.getElementById('password').value = '';
+                        
+                        setTimeout(() => {
+                            passwordStep.style.display = 'none';
+                            passwordStep.classList.remove('slide-out-right');
+                            passwordStep.classList.add('hidden');
+                            
+                            usernameStep.style.display = 'block';
+                            usernameStep.classList.remove('slide-out-left');
+                            usernameStep.classList.add('active', 'slide-in-left');
+                            
+                            setTimeout(() => {
+                                document.getElementById('username').focus();
+                            }, 200);
+                        }, 400);
+                    }
+
+                    function toggleLoading(button) {
+                        button.classList.add('smd-component_button--loading', 'interactive-loading');
+                        button.disabled = true;
+                    }
+
+                    function stopLoading(button) {
+                        button.classList.remove('smd-component_button--loading', 'interactive-loading');
+                        button.classList.add('smd-component_button--loading-out');
+                        button.disabled = false;
+                    }
+
+                    function showError(message) {
+                        document.querySelector('#error-dialog p').textContent = message;
+                        document.getElementById('error-dialog').style.display = 'block';
+                        document.getElementById('background').classList.add('sid-layout_main-blur');
+                        document.getElementById('footer').classList.add('sid-layout_main-blur');
+                    }
+
+                    function showTotpModal() {
+                        document.getElementById('totp-dialog').style.display = 'block';
+                        document.getElementById('background').classList.add('sid-layout_main-blur');
+                        document.getElementById('footer').classList.add('sid-layout_main-blur');
+                    }
+
+                    function unfocus(elementId) {
+                        document.getElementById(elementId).blur();
+                    }
+
+                    // Zusammengefügter DOMContentLoaded Event Listener
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Initial Card-Klasse setzen
+                        const card = document.querySelector('.sid-layout_login');
+                        card.classList.add('step-username');
+                        
+                        // Enter-Taste Event Listeners
+                        document.getElementById('username').addEventListener('keypress', function (e) {
+                            if (e.key === 'Enter') {
+                                checkUser(document.getElementById('continue_btn'));
+                            }
+                        });
+
+                        document.getElementById('password').addEventListener('keypress', function (e) {
+                            if (e.key === 'Enter') {
+                                handleLogin(document.getElementById('login_submit'));
+                            }
+                        });
+                    });
+                </script>
+
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::time::Duration;
 use rocket::response::Redirect;
 use rocket_dyn_templates::Template;
+use rocket::serde::json::Json;
 
 use argon2::{Argon2, PasswordHash, PasswordVerifier};
 use hex::encode;
@@ -11,12 +12,14 @@ use sha2::{Sha256, Digest};
 use crate::core::consts::PLACEHOLDER;
 use crate::core::object::{CodeType, LoginMeta, UserData};
 use crate::core::params::LoginParams;
+use crate::routes::v2::login::LoginResponse;
 use crate::utilities::unix_time;
 
-#[derive(Debug, Responder)]
+#[derive(Responder)]
 pub enum AnyResponder {
     Template(Template),
     Redirect(Box<Redirect>),
+    Json(Json<LoginResponse>), 
 }
 
 pub struct Account {

@@ -66,10 +66,10 @@ have_account_2: Create one!
 # Login messages
 login_error: Login error
 login_success: Login success
-wrong_username_or_password: Your username or password is incorrect correct. Please check your input!
-wrong_username: This Strawberry ID does not exist! Check your input!
+wrong_username_or_password: Your Strawberry ID is incorrect
+wrong_username: This Strawberry ID was not found!
 wrong_password: Your password is incorrect. Check your input again!
-account_disabled: Your account has been banned. Contact support if you think your account has been wrongly banned.
+account_disabled: Your account has been banned.
 
 redirect_after_login: After logging in you will be automatically redirected to %s
 trusted_domain: This domain has been verified by us and is safe.
@@ -128,3 +128,20 @@ only_permit_you_know: Check whether this request really comes from the app and o
 login_not_possible: Login not possible
 login_not_possible_invalid_code: The given code is either incorrect or does not exist.
 login_success_subtitle: You have been logged in to %s. You can now close this page
+
+
+
+
+
+
+
+
+
+
+
+
+
+continue: Continue
+welcome_back: Welcome back!
+user_not_found: User not found
+connection_error: Connection error
