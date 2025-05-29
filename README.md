@@ -5,7 +5,7 @@
 
 # Todo
 - Configurable logo in config.yml
-- Configurable services
+- Configurable services ✅
 - More customization
 - Change database backend to MySQL (configurable?)
-- Native dark mode
+- Native dark mode ✅
