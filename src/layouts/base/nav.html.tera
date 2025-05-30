@@ -3,7 +3,7 @@
         <a href="/">
             <img src="/static/assets/svg/sf_logo_small.svg" alt="Strawberry ID">
         </a>
-        <span class="smd-layout_header-title" style="cursor: pointer; text-decoration: none" href="/">Accounts</span>
+        <a class="smd-layout_header-title" style="cursor: pointer; text-decoration: none" href="/">Accounts</a>
     </div>
 
     <nav class="smd-layout_navbar">
