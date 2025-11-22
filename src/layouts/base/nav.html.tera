@@ -1,15 +1,14 @@
 <header class="smd-layout_header">
-    <div class="smd-layout_header-logo">
+    <div class="smd-layout_header-branding">
         <a href="/">
             <img src="/static/assets/svg/sf_logo_small.svg" alt="Strawberry ID">
         </a>
-        <a class="smd-layout_header-title" style="cursor: pointer; text-decoration: none" href="/">Accounts</a>
+        <a href="/">Accounts</a>
     </div>
 
     <nav class="smd-layout_navbar">
-        <a href="/v2/{{ lang }}">{{ strings.create_account_short }}</a>
-        <a href="https://developers.strawberryfoundations.org/german/strawberry-id/introduction">{{
-            strings.developer_documentation }}</a>
+        <a href="http://github.com/Strawberry-Foundations/"><span class="material-symbols-outlined">code</span> GitHub</a>
+        <a href="https://developers.strawberryfoundations.org/german/strawberry-id/introduction"><span class="material-symbols-outlined">developer_guide</span> {{strings.developer_documentation }}</a>
     </nav>
 
     <div class="smd-layout_navbar-right">
