@@ -1,30 +1,36 @@
+@font-face {
+  font-family: 'Google Sans Flex';
+  src: url('/static/assets/fonts/GoogleSansFlex-VariableFont.ttf') format('truetype');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
 .smd-layout_navbar {
   margin-left: 64px !important;
 }
 
 .smd-layout_navbar a {
   margin-bottom: 1px;
-  font-family: "Roboto Flex", sans-serif !important;
-  font-optical-sizing: auto !important;
-  font-style: normal !important;
-  font-variation-settings: 
-    "wdth" 115,
-    "wght" 600,
-    "YTAS" 800,
-    "XOPQ" 80,
-    "XTRA" 500;
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings:
+      "wdth" 100,
+      "GRAD" 0,
+      "ROND" 100;
 }
 
 .smd-layout_navbar-profile-name {
-  font-family: "Roboto Flex", sans-serif !important;
-  font-optical-sizing: auto !important;
-  font-style: normal !important;
-  font-variation-settings: 
-    "wdth" 125,
-    "wght" 700,
-    "YTAS" 800,
-    "XOPQ" 80,
-    "XTRA" 500;
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings:
+      "wdth" 100,
+      "GRAD" 0,
+      "ROND" 100;
 }
 
 

@@ -53,7 +53,14 @@
 }
 
 .sid-layout_login-main-submit input {
-    font-family: "Poppins", serif;
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings:
+      "wdth" 100,
+      "GRAD" 0,
+      "ROND" 100;
     font-size: 16px;
 }
 
@@ -84,7 +91,14 @@
 }
 
 .sid-layout_login-dialog button {
-    font-family: "Poppins", serif;
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings:
+      "wdth" 100,
+      "GRAD" 0,
+      "ROND" 100;
 }
 
 @keyframes slide-in-login {
